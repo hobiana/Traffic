@@ -23,7 +23,7 @@ class HomeCovoiturage extends React.Component {
                             </View>
                             <View style={styles.description_container}>
                                 <Text style={styles.description_text} numberOfLines={6}>
-                                    Vous ne voulez pas voyager ou bien seul? Proposez de faire la route avec vous!! Que ce soit pour le travail,
+                                    Vous ne voulez pas voyager seul ou vous voulez juste faire de nouvelles connaissances? Proposez de faire la route avec vous!! Que ce soit pour le travail,
                                     le voyage ou n'importe quel trajet.
                                 </Text>
                             </View>

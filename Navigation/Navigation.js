@@ -14,6 +14,7 @@ import Covoiturage from '../screen/Covoiturages/Covoiturage'
 import Embouteillage from '../screen/Embouteillages/Embouteillage'
 import Track from '../screen/Track/Track'
 import Profil from '../screen/Profil/Profil'
+import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
 
 
 const navoptions =
@@ -48,6 +49,9 @@ const CovoiturageStackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Covoiturage'
       }
+    },
+    FicheCovoiturage:{
+      screen: FicheCovoiturage,
     }
   },
   navoptions

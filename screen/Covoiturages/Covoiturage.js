@@ -2,16 +2,16 @@
 
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import CovoiturageNavigation from '../../Navigation/CovoiturageNavigation'
 
 class Covoiturage extends React.Component {
-
+  constructor(props) {
+    super(props)
+  }
+  
   render() {
     return (
-      <View style={styles.main_container}>
-        <View style={styles.subview_container}>
-            <Text>Covoirurage</Text>
-        </View>
-      </View>
+      <CovoiturageNavigation />
     )
   }
 }
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   subview_container: {
-    
+
   }
 })
 
