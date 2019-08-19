@@ -10,11 +10,11 @@ import Favorites from '../components/Favorites'
 import Login from '../screen/Authentification/Login'
 import Inscription from '../screen/Authentification/Inscription'
 import Home from '../screen/Home/Home'
-import Covoiturage from '../screen/Covoiturages/Covoiturage'
 import Embouteillage from '../screen/Embouteillages/Embouteillage'
 import Track from '../screen/Track/Track'
 import Profil from '../screen/Profil/Profil'
 import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
+import CovoiturageNavigation from '../Navigation/CovoiturageNavigation'
 
 
 const navoptions =
@@ -45,7 +45,7 @@ const HomeStackNavigator = createStackNavigator(
 const CovoiturageStackNavigator = createStackNavigator(
   {
     Covoiturage: { // Ici j'ai appelé la vue "Search" mais on peut mettre ce que l'on veut. C'est le nom qu'on utilisera pour appeler cette vue
-      screen: Covoiturage,
+      screen: CovoiturageNavigation,
       navigationOptions: {
         title: 'Covoiturage'
       }
@@ -117,6 +117,7 @@ const TrafficTabNavigator = createBottomTabNavigator(
         }
       }
     },
+    // TabPage: { screen: ({ navigation }) => <TabPage screenProps={{ rootNavigation: navigation }} />},
     Covoiturage: {
       screen: CovoiturageStackNavigator,
       navigationOptions: {

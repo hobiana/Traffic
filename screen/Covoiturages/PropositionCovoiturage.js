@@ -10,7 +10,7 @@ class PropositionCovoiturage extends React.Component {
   }
   
   _toMapSelect = () => {
-    this.props.navigation.push('FicheCovoiturage')
+    this.props.navigation.navigate('FicheCovoiturage')
     console.log(this.props)
   }
 
