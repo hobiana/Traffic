@@ -7,7 +7,8 @@ import {
     View,
     Text,
     ScrollView,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native'
 import HomeCovoiturage from '../../components/Home/HomeCovoiturage'
 import HomeLocalisation from '../../components/Home/HomeLocalisation'
@@ -24,9 +25,18 @@ class Home extends React.Component {
                         />
                     </View>
                     <View style={styles.desc_container}>
-                        <HomeCovoiturage />
-                        <HomeLocalisation />
-                        <HomeTraffic />
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.navigate('Covoiturage') }}>
+                            <HomeCovoiturage />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.navigate('Track') }}>
+                            <HomeLocalisation />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.navigate('Embouteillage') }}>
+                            <HomeTraffic />
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>

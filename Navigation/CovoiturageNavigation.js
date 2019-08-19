@@ -7,7 +7,6 @@ import CodeCouleur from '../helpers/CodeCouleur'
 import TabNavigatorOptions from '../helpers/tabNavigatorOptions'
 import ListeCovoiturage from '../screen/Covoiturages/ListeCovoiturage'
 import PropositionCovoiturage from '../screen/Covoiturages/PropositionCovoiturage'
-import MapPosition from '../screen/Covoiturages/MapPosition'
 
 const CovoiturageNavigation = createMaterialTopTabNavigator(
     {
@@ -18,9 +17,6 @@ const CovoiturageNavigation = createMaterialTopTabNavigator(
         Proposition: {
             screen: PropositionCovoiturage,
             tiltle: 'Proposition'
-        },
-        Map :{
-            screen: MapPosition
         }
     },
     TabNavigatorOptions

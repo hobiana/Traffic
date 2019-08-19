@@ -15,6 +15,7 @@ import Track from '../screen/Track/Track'
 import Profil from '../screen/Profil/Profil'
 import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
 import CovoiturageNavigation from '../Navigation/CovoiturageNavigation'
+import MapPosition from '../screen/Covoiturages/MapPosition'
 
 
 const navoptions =
@@ -52,6 +53,12 @@ const CovoiturageStackNavigator = createStackNavigator(
     },
     FicheCovoiturage:{
       screen: FicheCovoiturage,
+    },
+    MapPosition: {
+      screen: MapPosition,
+      navigationOptions: {
+        title: 'Choisir une position'
+      }
     }
   },
   navoptions
