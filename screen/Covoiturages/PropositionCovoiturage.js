@@ -11,7 +11,7 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native'
-import Reinput  from 'reinput'
+import Reinput from 'reinput'
 import CodeCouleur from '../../helpers/CodeCouleur'
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
@@ -59,7 +59,7 @@ class PropositionCovoiturage extends React.Component {
   }
 
   _toMapSelect = () => {
-    // this.props.navigation.navigate('MapPosition')
+    this.props.navigation.navigate('MapPosition')
     console.log(this.villeDep)
     console.log(this.villeArriv)
     console.log(this.state)

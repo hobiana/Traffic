@@ -2,37 +2,37 @@
 
 import React from 'react'
 import { StyleSheet, FlatList } from 'react-native'
-import CovItem from './CovItem'
+import TrackItem from './TrackItem'
 import { connect } from 'react-redux'
 
-class CovList extends React.Component {
+class TrackList extends React.Component {
 
     constructor(props) {
         super(props)
     }
 
-    _displayDetailForCovoiturage = (id) => {
+    _displayDetailForTrack = (id) => {
         // On a récupéré les informations de la navigation, on peut afficher le détail du film
-        this.props.navigation.navigate('FicheCovoiturage')
+        this.props.navigation.navigate('FicheTrack')
     }
 
     render() {
         return (
             <FlatList
                 style={styles.list}
-                data={this.props.covoiturages}
+                data={this.props.tracks}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <CovItem
-                        covoiturage={item}
-                        displayDetailForCovoiturages={this._displayDetailForCovoiturage}
+                    <TrackItem
+                        track={item}
+                        displayDetailForTrack={this._displayDetailForTrack}
                     />
                 )}
                 onEndReachedThreshold={0.5}
                 onEndReached={() => {
                     if (!this.props.favoriteList && this.props.page < this.props.totalPages) {
                         // On appelle la méthode loadFilm du component Search pour charger plus de films
-                        this.props.loadCovoiturages()
+                        this.props.loadListPerson()
                     }
                 }}
             />
@@ -52,4 +52,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(CovList)
+export default connect(mapStateToProps)(TrackList)

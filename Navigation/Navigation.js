@@ -4,18 +4,19 @@ import React from 'react' // N'oubliez pas l'import de React ici. On en a besoin
 import { StyleSheet, Image } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 import  Code  from '../helpers/CodeCouleur'
-import Search from '../components/Search'
-import FilmDetail from '../components/FilmDetail'
-import Favorites from '../components/Favorites'
 import Login from '../screen/Authentification/Login'
 import Inscription from '../screen/Authentification/Inscription'
 import Home from '../screen/Home/Home'
 import Embouteillage from '../screen/Embouteillages/Embouteillage'
-import Track from '../screen/Track/Track'
 import Profil from '../screen/Profil/Profil'
 import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
-import CovoiturageNavigation from '../Navigation/CovoiturageNavigation'
+import FicheTrack from '../screen/Track/FicheTrack'
 import MapPosition from '../screen/Covoiturages/MapPosition'
+
+
+//tab navigation
+import CovoiturageNavigation from '../Navigation/CovoiturageNavigation'
+import LocalisationNavigation from '../Navigation/LocalisationNavigation'
 
 
 const navoptions =
@@ -79,10 +80,13 @@ const EmbouteillageStackNavigator = createStackNavigator(
 const TrackStackNavigator = createStackNavigator(
   {
     Track: { // Ici j'ai appelé la vue "Search" mais on peut mettre ce que l'on veut. C'est le nom qu'on utilisera pour appeler cette vue
-      screen: Track,
+      screen: LocalisationNavigation,
       navigationOptions: {
         title: 'Localisation'
       }
+    },
+    FicheTrack:{
+      screen: FicheTrack
     }
   },
   navoptions

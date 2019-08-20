@@ -74,14 +74,9 @@ class ListeCovoiturage extends React.Component {
     this.setState({
       covoiturages: []
     }, () => {
-      console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de films : " + this.state.covoiturages.length)
+      console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de covoiturages : " + this.state.covoiturages.length)
       this._loadCovoiturages()
     })
-  }
-
-  _displayDetailForFilm = (idFilm) => {
-    console.log("Display film with id " + idFilm);
-    this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
   }
 
   render() {
@@ -122,7 +117,7 @@ class ListeCovoiturage extends React.Component {
           <CovList
             covoiturages={this.state.covoiturages} 
             navigation={this.props.navigation} 
-            loadFilms={this._loadCovoiturages} 
+            loadCovoiturages={this._loadCovoiturages} 
             page={this.page}
             totalPages={this.totalPages} 
           />
@@ -143,14 +138,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   covoiturage_container: {
-    flex: 8
+    flex: 8,
   },
   loading_container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 100,
-    bottom: 0,
+    flex:100,
     alignItems: 'center',
     justifyContent: 'center'
   }

@@ -7,6 +7,7 @@ export default Code =
          backgroundColor: '#6f4b97',
          color: '#fff',
          padding: 8,
-         borderRadius: 5
+         borderRadius: 5,
+         textAlign: 'center'
       }
    }
