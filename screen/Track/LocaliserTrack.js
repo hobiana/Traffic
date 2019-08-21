@@ -14,6 +14,7 @@ import {
 import CodeCouleur from '../../helpers/CodeCouleur'
 import Reinput from 'reinput'
 import TrackList from '../../components/Tracking/TrackList'
+import AntDesign from '@expo/vector-icons/AntDesign'
 
 class LocaliserTrack extends React.Component {
   constructor(props) {
@@ -25,13 +26,13 @@ class LocaliserTrack extends React.Component {
       tracks: [
         {
           id: 'kkk',
-          nom: 'aa',
-          prenom: 'test'
+          nom: 'Razakanaivo',
+          prenom: 'Hobiana'
         },
         {
           id: 'ssese',
-          nom: 'bb',
-          prenom: 'test2'
+          nom: 'Rabearivelo',
+          prenom: 'Toky'
         }
       ],
       isLoading: false
@@ -119,7 +120,7 @@ class LocaliserTrack extends React.Component {
                   <TouchableOpacity
                     onPress={this._addPersonToTrack}
                   >
-                    <Text style={styles.btnStyle}>Localiser</Text>
+                    <Text style={styles.btnStyle}><AntDesign name="pluscircleo" /> Localiser</Text>
                   </TouchableOpacity>
                 </View>
               </View>

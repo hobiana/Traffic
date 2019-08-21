@@ -5,7 +5,8 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from 'react-native'
 import Reinput from 'reinput'
 import CodeCouleur from '../../helpers/CodeCouleur'
@@ -15,18 +16,30 @@ import CovList from '../../components/Covoiturage/CovList'
 class ListeCovoiturage extends React.Component {
   constructor(props) {
     super(props)
-    this.searchedText = "";
+    this.departText = "";
+    this.arriveeText = "";
     this.page = 0;
     this.totalPages = 0;
     this.state = {
       covoiturages: [
         {
-          id:'kkk',
-          depart: 'aa'
+          id: 'kkk',
+          depart: 'Mahamasina',
+          arrivee: 'Itaosy',
+          totalPassager: 6,
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00'
         },
         {
-          id:'ssese',
-          depart: 'bb'
+          id: 'aa',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
         }
       ],
       isLoading: false
@@ -34,10 +47,10 @@ class ListeCovoiturage extends React.Component {
   }
 
   _loadCovoiturages = () => { // izay fonction misy anio fleche io dia vo bind automatic ary afaka ampiasana any @ components hafa
-    console.log('text', this.searchedText);
-    if (this.searchedText.length > 0) {
+    console.log('text', this.departText);
+    if (this.departText.length > 0) {
       this.setState({ isLoading: true })
-      // getFilmsFromApiWithSearchedText(this.searchedText, this.page + 1).then(data => {
+      // getFilmsFromApiWithdepartText(this.departText, this.page + 1).then(data => {
       //   this.page = data.page;
       //   this.totalPages = data.total_pages;
       //   this.setState({
@@ -46,9 +59,7 @@ class ListeCovoiturage extends React.Component {
       //   })
       // });
     }
-    this.setState({
-      isLoading: true
-    })
+    this.setState({ isLoading: true })
   }
 
   _displayLoading() {
@@ -64,62 +75,122 @@ class ListeCovoiturage extends React.Component {
     }
   }
 
-  _searchTextInputChanged(text) {
-    this.searchedText = text;
+  _searchDepartInputChanged(text) {
+    this.departText = text;
   }
 
-  _searchCovoiturages() {
+  _searchArriveeInputChanged(text) {
+    this.arriveeText = text;
+  }
+
+  _searchCovoiturages= () => {
     this.page = 0;
     this.totalPages = 0;
-    this.setState({
-      covoiturages: []
-    }, () => {
-      console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de covoiturages : " + this.state.covoiturages.length)
+    // this.setState({
+    //   covoiturages: []
+    // }, () => {
+    //   console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de covoiturages : " + this.state.covoiturages.length)
       this._loadCovoiturages()
-    })
+    // })
   }
 
   render() {
     return (
       <View style={styles.main_container}>
         <View style={styles.search_container}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}></View>
-            <View style={{ flex: 10 }}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={{ flex: 10 }}>
-                  <Reinput
-                    label="Départ"
-                    fontSize={14}
-                    labelActiveColor={CodeCouleur.activeCouleur}
-                    underlineActiveColor={CodeCouleur.activeCouleur}
-                    onChangeText={(text) => this._searchTextInputChanged(text)}
-                    onSubmitEditing={() => this._searchCovoiturages()}
-                  />
-                </View>
-                <View style={{ flex: 2, paddingLeft: 15, paddingTop: 18 }}>
-                  <TouchableOpacity
-                    onPress={() => this._searchCovoiturages()}
-                  >
-                    <Feather
-                      name={'search'}
-                      size={26}
-                      color={CodeCouleur.activeCouleur}
+          <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}></View>
+              <View style={{ flex: 10 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flex: 10 }}>
+                    <Reinput
+                      label="Départ"
+                      fontSize={14}
+                      labelActiveColor={CodeCouleur.activeCouleur}
+                      underlineActiveColor={CodeCouleur.activeCouleur}
+                      onChangeText={(text) => this._searchDepartInputChanged(text)}
+                      //onSubmitEditing={() => this._searchCovoiturages()}
                     />
-                  </TouchableOpacity>
+                  </View>
+                  {/* <View style={{ flex: 2, paddingLeft: 15, paddingTop: 18 }}>
+                    <TouchableOpacity
+                      onPress={() => this._searchCovoiturages()}
+                    >
+                      <Feather
+                        name={'search'}
+                        size={26}
+                        color={CodeCouleur.activeCouleur}
+                      />
+                    </TouchableOpacity>
+                  </View> */}
                 </View>
               </View>
+              <View style={{ flex: 1 }}></View>
             </View>
-            <View style={{ flex: 1 }}></View>
+          </View>
+
+
+          <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}></View>
+              <View style={{ flex: 10 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flex: 10 }}>
+                    <Reinput
+                      label="Arrivée"
+                      fontSize={14}
+                      labelActiveColor={CodeCouleur.activeCouleur}
+                      underlineActiveColor={CodeCouleur.activeCouleur}
+                      onChangeText={(text) => this._searchArriveeInputChanged(text)}
+                      //onSubmitEditing={() => this._searchCovoiturages()}
+                    />
+                  </View>
+                  {/* <View style={{ flex: 2, paddingLeft: 15, paddingTop: 18 }}>
+                    <TouchableOpacity
+                      onPress={() => this._searchCovoiturages()}
+                    >
+                      <Feather
+                        name={'search'}
+                        size={26}
+                        color={CodeCouleur.activeCouleur}
+                      />
+                    </TouchableOpacity>
+                  </View> */}
+                </View>
+              </View>
+              <View style={{ flex: 1 }}></View>
+            </View>
+          </View>
+
+
+          <View style={{ flex: 1, flexDirection: 'column', marginTop:15 }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}></View>
+              <View style={{ flex: 10 }}>
+                <Button
+                  onPress={()=>{this._searchCovoiturages()}}
+                  style={styles.text}
+                  title='Rechercher'
+                  type="outline"
+                  buttonStyle={{
+                    backgroundColor: 'transparent'
+                  }}
+                />
+              </View>
+              <View style={{ flex: 1 }}></View>
+            </View>
           </View>
         </View>
+
+
         <View style={styles.covoiturage_container}>
           <CovList
-            covoiturages={this.state.covoiturages} 
-            navigation={this.props.navigation} 
-            loadCovoiturages={this._loadCovoiturages} 
+            covoiturages={this.state.covoiturages}
+            navigation={this.props.navigation}
+            loadCovoiturages={this._loadCovoiturages}
             page={this.page}
-            totalPages={this.totalPages} 
+            totalPages={this.totalPages}
           />
           {this._displayLoading()}
         </View>
@@ -135,13 +206,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   search_container: {
-    flex: 1,
+    flex: 2,
   },
   covoiturage_container: {
     flex: 8,
+    marginTop: 10
   },
   loading_container: {
-    flex:100,
+    flex: 1000,
     alignItems: 'center',
     justifyContent: 'center'
   }

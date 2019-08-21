@@ -8,23 +8,17 @@ import CodeCouleur from '../../helpers/CodeCouleur'
 class TrackItem extends React.Component {
     render() {
         const { track, displayDetailForTrack } = this.props
-
+        const firstLetters = track.nom.charAt(0) + track.prenom.charAt(0);
         return (
             <FadeIn>
                 <TouchableOpacity
                     style={styles.main_container}
-                    onPress={() => displayDetailForTrack(track.id)}
-                >
-                    <View style={styles.desc_container}>
-                        <Text>Dép : Antananarivo / Arr : Majunga </Text>
+                    onPress={() => displayDetailForTrack(track.id)} >
+                    <View style={styles.letters_container}>
+                        <Text style={styles.letter_text}>{firstLetters.toUpperCase()}</Text>
                     </View>
-                    <View style={styles.nbpassager_container}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={styles.nbpassager_text}>Places</Text>
-                        </View>
-                        <View style={{ flex: 2, justifyContent: 'center', }}>
-                            <Text style={styles.nbpassager_text}>3 / 6</Text>
-                        </View>
+                    <View style={styles.desc_container}>
+                        <Text style={styles.desc_text}>{track.nom} {track.prenom}</Text>
                     </View>
                 </TouchableOpacity>
             </FadeIn>
@@ -38,21 +32,30 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 10,
     },
+    letters_container: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems:'center'
+    },
+    letter_text: {
+        paddingTop:10,
+        width: 50,
+        height: 50,
+        color: '#fff',
+        fontSize: 20,
+        textAlign: 'center',
+        borderRadius: 30,
+        backgroundColor: CodeCouleur.activeCouleur,
+    },
     desc_container: {
-        flex: 4,
+        flex: 6,
         flexDirection: 'column',
         fontStyle: 'italic',
-        color: '#666666'
+        justifyContent: 'center'
     },
-    nbpassager_container: {
-        flex: 1,
-        justifyContent: 'center',
-        flexDirection: 'column',
-        borderColor: CodeCouleur.fondCouleur
+    desc_text: {
+        paddingLeft: 15
     },
-    nbpassager_text: {
-        textAlign: 'center',
-    }
 })
 
 export default TrackItem
