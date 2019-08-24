@@ -22,7 +22,7 @@ class FilmItem extends React.Component {
                         <Text style={styles.letter_text}>{firstLetters.toUpperCase()}</Text>
                     </View>
                     <View style={styles.desc_container}>
-                        <Text style={styles.desc_text}>{covoiturage.depart} <FontAwesome name="chevron-right" /> {covoiturage.arrivee} </Text>
+                        <Text style={styles.desc_text} numberOfLines={3}>{covoiturage.depart} <FontAwesome name="chevron-right" /> {covoiturage.arrivee} </Text>
                     </View>
                     <View style={styles.nbpassager_container}>
                         <View style={{ flex: 1 }}>
