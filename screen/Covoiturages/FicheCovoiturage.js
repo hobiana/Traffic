@@ -1,8 +1,15 @@
 // Components/Test.js
 
 import React from 'react'
-import { StyleSheet, Dimensions, View, Text } from 'react-native'
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+  Button
+} from 'react-native'
 import MapView from 'react-native-maps'
+import AntDesign from '@expo/vector-icons/AntDesign'
 
 class FicheCovoiturage extends React.Component {
 
@@ -15,7 +22,7 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.textLibelle}>Départ :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text}>Mahamasina</Text>
+              <Text style={styles.text} numberOfLines={2}>Mahamasina, Antananarivo, Madagascar</Text>
             </View>
           </View>
 
@@ -24,7 +31,7 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.textLibelle}>Arrivée :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text}>Mahamasina</Text>
+              <Text style={styles.text} numberOfLines={6}>Mahamasina</Text>
             </View>
           </View>
 
@@ -54,6 +61,25 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.text}>+261</Text>
             </View>
           </View>
+
+          <View style={styles.ligne}>
+            <View style={styles.libelle}>
+              <Text style={styles.textLibelle}>Date et heure :</Text>
+            </View>
+            <View style={styles.data}>
+              <Text style={styles.text}>2019-08-01 08:00</Text>
+            </View>
+          </View>
+
+          <View style={styles.ligne}>
+            <View style={styles.libelle}>
+              <Button
+                title="Covoiturage"
+              />
+            </View>
+          </View>
+
+
         </View>
         <View style={styles.map_container}>
           <MapView
@@ -82,13 +108,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 2,
     left: 2,
-    width: Dimensions.get('window').width * 2 / 3,
-    height: Dimensions.get('window').width / 2,
+    width: Dimensions.get('window').width - 4,
+    height: Dimensions.get('window').width * 2/ 3,
     zIndex: 5,
     borderRadius: 5
   },
   ligne: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flex: 1
   },
   map_container: {
     flex: 1
@@ -105,7 +132,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     fontSize: 16,
-    paddingLeft: 10
+    paddingLeft: 10,
+    textAlign: 'center'
   },
   textLibelle: {
     color: '#fff',
@@ -116,7 +144,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   data: {
-    flex: 2
+    flex: 3
   }
 })
 

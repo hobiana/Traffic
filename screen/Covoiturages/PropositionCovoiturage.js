@@ -20,49 +20,70 @@ class PropositionCovoiturage extends React.Component {
 
   constructor(props) {
     super(props)
-    this.villeDep = "";
-    this.villeArriv = "";
     this.nbpassager = 0;
 
     let date = moment(new Date()).format('YYYY-MM-DD');
     let time = moment(new Date()).format('HH:mm');
 
     this.state = {
-      coordDep: '',
-      coordArriv: '',
+      coordDep: {},
+      nameLocDep: '',
+      coordArriv: {},
+      nameLocArriv: '',
       date: date,
       time: time
     }
   }
 
-  // _splitDateTime(datetime){
-  //   console.log(datetime)
-  //   let d=datetime.split("T");
-  //   let rep = [];
-  //   rep.push(d[0]); //date
-
-  //   let time=d[1].split(".");
-  //   rep.push(time[0]);
-  //   return rep;
-  // }
-
   _villeDepChangeText = (text) => {
-    this.villeDep = text;
+    this.setState({
+      nameLocDep: text
+    })
   }
 
   _villeArrivChangeText = (text) => {
-    this.villeDep = text;
+    this.setState({
+      nameLocArriv: text
+    })
   }
 
   _nbpassagerChangeText = (text) => {
     this.nbpassager = text;
   }
 
-  _toMapSelect = () => {
-    this.props.navigation.navigate('MapPosition')
+  //set value auto
+  _departChangeValueFromMapPosition = (value) => {
+    console.log("hahahahahahah")
+    this.setState({
+      coordDep: {
+        lat: value.latitude,
+        lon: value.longitude
+      },
+      nameLocDep: value.nameLocation
+    })
+  }
+
+  _arriveeChangeValueFromMapPosition = (value) => {
+    this.setState({
+      coordArriv: {
+        lat: value.latitude,
+        lon: value.longitude
+      },
+      nameLocArriv: value.nameLocation
+    })
+  }
+  //tapitra set value auto
+
+  _toMapSelect = (func) => {
+    this.props.navigation.navigate('MapPosition', { returnFunction: () => func })
     console.log(this.villeDep)
     console.log(this.villeArriv)
     console.log(this.state)
+  }
+
+  _proposer = () => {
+    console.log("proposer",this.state)
+
   }
 
   render() {
@@ -80,12 +101,12 @@ class PropositionCovoiturage extends React.Component {
                   editable={false}
                   labelActiveColor={CodeCouleur.activeCouleur}
                   underlineActiveColor={CodeCouleur.activeCouleur}
-                  defaultValue={this.state.coordDep}
+                  value={JSON.stringify(this.state.coordDep)}
                 />
               </View>
               <View style={{ flex: 2, paddingLeft: 15, paddingTop: 5 }}>
                 <TouchableOpacity
-                  onPress={this._toMapSelect}
+                  onPress={() => this.props.navigation.navigate('MapPosition', { returnFunction: this._departChangeValueFromMapPosition })}
                 >
                   <Image
                     source={require('../../images/ic_position.png')}
@@ -100,6 +121,7 @@ class PropositionCovoiturage extends React.Component {
               fontSize={14}
               labelActiveColor={CodeCouleur.activeCouleur}
               underlineActiveColor={CodeCouleur.activeCouleur}
+              value={this.state.nameLocDep}
               onChangeText={(text) => this._villeDepChangeText(text)}
             />
 
@@ -111,12 +133,12 @@ class PropositionCovoiturage extends React.Component {
                   editable={false}
                   labelActiveColor={CodeCouleur.activeCouleur}
                   underlineActiveColor={CodeCouleur.activeCouleur}
-                  defaultValue={this.state.coordArriv}
+                  value={JSON.stringify(this.state.coordArriv)}
                 />
               </View>
               <View style={{ flex: 2, paddingLeft: 15, paddingTop: 5 }}>
                 <TouchableOpacity
-                  onPress={this._toMapSelect}
+                  onPress={() => this.props.navigation.navigate('MapPosition', { returnFunction: this._arriveeChangeValueFromMapPosition })}
                 >
                   <Image
                     source={require('../../images/ic_position.png')}
@@ -130,6 +152,7 @@ class PropositionCovoiturage extends React.Component {
               fontSize={14}
               labelActiveColor={CodeCouleur.activeCouleur}
               underlineActiveColor={CodeCouleur.activeCouleur}
+              value={this.state.nameLocArriv}
               onChangeText={(text) => this._villeArrivChangeText(text)}
             />
 
@@ -187,7 +210,7 @@ class PropositionCovoiturage extends React.Component {
             </View>
 
             <Button
-              onPress={this._toMapSelect}
+              onPress={this._proposer}
               style={styles.text}
               title='Proposer'
               type="outline"

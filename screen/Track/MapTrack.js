@@ -5,7 +5,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native'
 import
 MapView
@@ -22,15 +23,16 @@ class MapTrack extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+        </MapView>
       </View>
     )
   }

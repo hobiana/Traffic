@@ -24,8 +24,8 @@ class ListeCovoiturage extends React.Component {
       covoiturages: [
         {
           id: 'kkk',
-          depart: 'Mahamasina',
-          arrivee: 'Itaosy',
+          depart: 'Mahamasina, Antananarivo, Madagascar',
+          arrivee: 'Itaosy,, Antananarivo, Madagascar,zlbgmzbgezmognmzongznb blfaebgfoagim',
           totalPassager: 6,
           nbpassager: 5,
           date: '2019-08-05',
@@ -33,6 +33,106 @@ class ListeCovoiturage extends React.Component {
         },
         {
           id: 'aa',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'bb',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'cc',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'dd',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'ee',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'ff',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'gg',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'hh',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'ii',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'jj',
+          depart: 'Tana',
+          arrivee: 'Majunga',
+          nbpassager: 5,
+          date: '2019-08-05',
+          time: '08:00',
+          totalPassager: 3,
+          nbpassager: 1,
+        },
+        {
+          id: 'kk',
           depart: 'Tana',
           arrivee: 'Majunga',
           nbpassager: 5,
@@ -83,15 +183,10 @@ class ListeCovoiturage extends React.Component {
     this.arriveeText = text;
   }
 
-  _searchCovoiturages= () => {
+  _searchCovoiturages = () => {
     this.page = 0;
     this.totalPages = 0;
-    // this.setState({
-    //   covoiturages: []
-    // }, () => {
-    //   console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre de covoiturages : " + this.state.covoiturages.length)
-      this._loadCovoiturages()
-    // })
+    this._loadCovoiturages()
   }
 
   render() {
@@ -110,20 +205,8 @@ class ListeCovoiturage extends React.Component {
                       labelActiveColor={CodeCouleur.activeCouleur}
                       underlineActiveColor={CodeCouleur.activeCouleur}
                       onChangeText={(text) => this._searchDepartInputChanged(text)}
-                      //onSubmitEditing={() => this._searchCovoiturages()}
                     />
                   </View>
-                  {/* <View style={{ flex: 2, paddingLeft: 15, paddingTop: 18 }}>
-                    <TouchableOpacity
-                      onPress={() => this._searchCovoiturages()}
-                    >
-                      <Feather
-                        name={'search'}
-                        size={26}
-                        color={CodeCouleur.activeCouleur}
-                      />
-                    </TouchableOpacity>
-                  </View> */}
                 </View>
               </View>
               <View style={{ flex: 1 }}></View>
@@ -143,20 +226,8 @@ class ListeCovoiturage extends React.Component {
                       labelActiveColor={CodeCouleur.activeCouleur}
                       underlineActiveColor={CodeCouleur.activeCouleur}
                       onChangeText={(text) => this._searchArriveeInputChanged(text)}
-                      //onSubmitEditing={() => this._searchCovoiturages()}
                     />
                   </View>
-                  {/* <View style={{ flex: 2, paddingLeft: 15, paddingTop: 18 }}>
-                    <TouchableOpacity
-                      onPress={() => this._searchCovoiturages()}
-                    >
-                      <Feather
-                        name={'search'}
-                        size={26}
-                        color={CodeCouleur.activeCouleur}
-                      />
-                    </TouchableOpacity>
-                  </View> */}
                 </View>
               </View>
               <View style={{ flex: 1 }}></View>
@@ -164,12 +235,12 @@ class ListeCovoiturage extends React.Component {
           </View>
 
 
-          <View style={{ flex: 1, flexDirection: 'column', marginTop:15 }}>
+          <View style={{ flex: 1, flexDirection: 'column', marginTop: 15 }}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <View style={{ flex: 1 }}></View>
               <View style={{ flex: 10 }}>
                 <Button
-                  onPress={()=>{this._searchCovoiturages()}}
+                  onPress={() => { this._searchCovoiturages() }}
                   style={styles.text}
                   title='Rechercher'
                   type="outline"
