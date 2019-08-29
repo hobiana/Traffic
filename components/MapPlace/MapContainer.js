@@ -10,6 +10,7 @@ import MapInput from './MapInput';
 import MyMapView from './MyMapView';
 import { getLocation } from './LocationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome'
+import TrafficApi from '../../API/TrafficAPI'
 
 class MapContainer extends React.Component {
   state = {
@@ -47,7 +48,6 @@ class MapContainer extends React.Component {
   }
 
   getCoordsFromName(loc, name) {
-    console.log('loc ry tay', loc)
     this.updateState({
       latitude: loc.lat,
       longitude: loc.lng,
