@@ -9,13 +9,18 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
-    Text
+    Text,
+    Alert
 } from 'react-native'
 import { connect } from 'react-redux'
 import bgimage from '../../images/bgimage.png'
 import traffic from '../../images/app_logo.png'
 import { TextInput } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
+import {
+    inscription,
+    authentification
+} from '../../API/TrafficAPI'
 
 const { width: WIDTH } = Dimensions.get('window')
 class Inscription extends React.Component {
@@ -24,11 +29,74 @@ class Inscription extends React.Component {
         this.state = {
             showPassword: false
         }
+        this.nom = "";
+        this.prenom = "";
+        this.email = "";
+        this.motdepasse = "";
+        this.confirmmotdepasse = "";
+    }
+
+    _nomChangeText = (text) => {
+        this.nom = text;
+    }
+
+    _prenomChangeText = (text) => {
+        this.prenom = text;
+    }
+
+    _emailChangeText = (text) => {
+        this.email = text;
+    }
+
+    _motdepasseChangeText = (text) => {
+        this.motdepasse = text;
+    }
+    _confirmmotdepasseChangeText = (text) => {
+        this.confirmmotdepasse = text;
     }
 
     _toLogin = () => {
-        console.log('haha')
         this.props.navigation.navigate('Login')
+    }
+    _signup = async () => {
+        if (this.nom != "" && this.prenom != "" && this.motdepasse != "" && this.email != "" && this.confirmmotdepasse != "") {
+            if (this.confirmmotdepasse != this.motdepasse) {
+                Alert.alert(
+                    'Erreur',
+                    'Mot de passe non identique',
+                    [
+                        { text: 'OK', onPress: () => console.log('OK Pressed') },
+                    ],
+                    { cancelable: false },
+                );
+            } else {
+                const iduser = await inscription(this.nom, this.prenom,this.email,this.motdepasse);
+                if(iduser.status == 201){
+                    const tokenReturn = await authentification(this.email, this.motdepasse);
+                    await SecureStore.setItemAsync('secure_token', tokenReturn.data.accessToken);
+                    await SecureStore.setItemAsync('id_user', iduser.data.id);
+                    this.props.navigation.navigate('Main')
+                }else{
+                    Alert.alert(
+                        'Erreur',
+                        'Erreur d\'inscription',
+                        [
+                            { text: 'OK', onPress: () => console.log('OK Pressed') },
+                        ],
+                        { cancelable: false },
+                    );
+                }
+            }
+        } else {
+            Alert.alert(
+                'Erreur',
+                'Remplissez tous les champs',
+                [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ],
+                { cancelable: false },
+            );
+        }
     }
 
     showPassword = () => {
@@ -64,7 +132,9 @@ class Inscription extends React.Component {
                             placeholder={'Nom'}
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
-                            style={styles.input} />
+                            style={styles.input}
+                            onChangeText={(text) => this._nomChangeText(text)}
+                        />
                     </View>
 
                     <View style={styles.inputContainer}>
@@ -78,7 +148,9 @@ class Inscription extends React.Component {
                             placeholder={'Prénom'}
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
-                            style={styles.input} />
+                            style={styles.input}
+                            onChangeText={(text) => this._prenomChangeText(text)}
+                        />
                     </View>
 
                     <View style={styles.inputContainer}>
@@ -89,10 +161,12 @@ class Inscription extends React.Component {
                             style={styles.inputIcon}
                         />
                         <TextInput
-                            placeholder={'Pseudo'}
+                            placeholder={'Email'}
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
-                            style={styles.input} />
+                            style={styles.input}
+                            onChangeText={(text) => this._emailChangeText(text)}
+                        />
                     </View>
 
                     <View style={styles.inputContainer}>
@@ -107,7 +181,10 @@ class Inscription extends React.Component {
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
                             secureTextEntry={!this.state.showPassword}
-                            style={styles.input} />
+                            style={styles.input}
+                            onChangeText={(text) => this._motdepasseChangeText(text)}
+                        />
+
                         <TouchableOpacity style={styles.btnEye}
                             onPress={this.showPassword}>
                             <Feather
@@ -130,10 +207,14 @@ class Inscription extends React.Component {
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
                             secureTextEntry={!this.state.showPassword}
-                            style={styles.input} />
+                            style={styles.input} 
+                            onChangeText={(text) => this._confirmmotdepasseChangeText(text)}
+                            />
                     </View>
 
-                    <TouchableOpacity style={styles.btnLogin}>
+                    <TouchableOpacity
+                        style={styles.btnLogin}
+                        onPress={this._signup}>
                         <Text style={styles.text}>S'inscrire</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -178,7 +259,7 @@ const styles = StyleSheet.create({
         paddingLeft: 45,
         fontSize: 16,
         backgroundColor: 'rgba(0,0,0,0.35)',
-        color: 'rgba(255,255,255,0.7)',
+        color: '#fff',
         marginHorizontal: 25,
     },
     inputIcon: {

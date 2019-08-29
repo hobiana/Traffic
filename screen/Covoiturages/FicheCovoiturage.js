@@ -6,12 +6,30 @@ import {
   Dimensions,
   View,
   Text,
-  Button
+  Button,
+  Image
 } from 'react-native'
 import MapView from 'react-native-maps'
-import AntDesign from '@expo/vector-icons/AntDesign'
+// import MapViewDirections from 'react-native-maps-directions';
+// import Apikey from '../../API/ApiKey'
 
 class FicheCovoiturage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      region: {}
+    }
+
+    this.origin = {
+      latitude: -18.9841083,
+      longitude: 47.5362746,
+    };
+
+    this.destination = {
+      latitude: -18.9188737,
+      longitude: 47.5263146,
+    };
+  }
 
   render() {
     return (
@@ -74,6 +92,9 @@ class FicheCovoiturage extends React.Component {
           <View style={styles.ligne}>
             <View style={styles.libelle}>
               <Button
+                onPress={() => {
+                  this.props.navigation.goBack()
+                }}
                 title="Covoiturage"
               />
             </View>
@@ -85,12 +106,24 @@ class FicheCovoiturage extends React.Component {
           <MapView
             style={styles.map}
             initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitude: -18.9841083,
+              longitude: 47.5362746,
+              latitudeDelta: 0.1,
+              longitudeDelta: 0.1,
             }}
-          />
+          >
+
+            <MapView.Marker
+              title={"Départ"}
+              coordinate={this.origin} />
+
+            <MapView.Marker
+              title={"Arrivée"}
+              coordinate={this.destination}
+            >
+              <Image source={require('../../images/ic_flag_finish.png')} style={{ height: 35, width: 35 }} />
+            </MapView.Marker>
+          </MapView>
         </View>
       </View>
     )
@@ -109,7 +142,7 @@ const styles = StyleSheet.create({
     top: 2,
     left: 2,
     width: Dimensions.get('window').width - 4,
-    height: Dimensions.get('window').width * 2/ 3,
+    height: Dimensions.get('window').width * 2 / 3,
     zIndex: 5,
     borderRadius: 5
   },
