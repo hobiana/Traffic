@@ -87,8 +87,7 @@ class MapContainer extends React.Component {
           {this.state.region['latitude'] ? (
             <View
               style={{
-                flex: 1,
-                backgroundColor: 'yellow'
+                flex: 1
               }}
             >
               <MyMapView

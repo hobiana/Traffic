@@ -4,18 +4,33 @@ import ApiKey from './ApiKey';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const base_url = "http://192.168.88.18:3000/";
+const base_url = "http://192.168.8.101:3000/";
 const token = SecureStore.getItemAsync('secure_token');
 
 var configToken = {
     headers: { 'Authorization': "bearer " + token }
 };
 
-export function getDirection(origin, destination) {
+export function getDirection(origin, destination) { //the best direction selon google
     const url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '&units=metric&key=' + ApiKey.Api
-    return fetch(url)
-        .then((response) => response.json())
-        .catch((error) => console.error(error))
+    console.log(url)
+    return axios.get(url)
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            console.log(error.response.status)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }
 
 export function getDirections(origin, destination) {
@@ -52,7 +67,7 @@ export function authentification(email, mp) {
     }
     const url = base_url + 'auth'
     console.log(url, user)
-    
+
     return axios.post(url, user)
         .then((response) => {
             const rep = {
@@ -81,22 +96,22 @@ export function inscription(fistname, lastname, email, mp) {
     }
     const url = base_url + 'users'
     return axios.post(url, user)
-    .then((response) => {
-        const rep = {
-            status: response.status,
-            data: response.data
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
         }
-        return rep;
-    }
-    )
-    .catch((error) => {
-        console.log(error.response.status)
-        const err = {
-            status: error.response.status,
-            data: error.response.data
-        }
-        return err;
-    })
+        )
+        .catch((error) => {
+            console.log(error.response.status)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }
 
 export function getUsers(id) {
@@ -113,15 +128,43 @@ export function getUsers(id) {
 export function proposerCovoiturage(data) {
     const url = base_url + 'covoiturages';
     return axios.post(url, data, configToken)
-        .then((response) => response.data)
-        .catch((error) => console.error(error))
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            console.log(error.response.status)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }
 
-export function getCovoiturage(id) { // ra tsy misy id dia listeno miverina
+export function getCovoiturages(id) { // ra tsy misy id dia listeno miverina
     let idurl = '/';
     if (id == null) idurl += id;
     const url = base_url + 'covoiturages' + idurl
     return axios.get(url, configToken)
-        .then((response) => response.data)
-        .catch((error) => console.error(error))
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            console.log(error.response.status)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }

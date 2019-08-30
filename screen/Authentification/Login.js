@@ -30,8 +30,8 @@ class Login extends React.Component {
             showPassword: false,
             dialog: false
         }
-        this.email = "";
-        this.password = "";
+        this.email = "hobiana@yahoo.com";
+        this.password = "hobs";
     }
 
     //https://www.youtube.com/watch?v=QtuZJPwZXvo

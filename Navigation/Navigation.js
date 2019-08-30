@@ -12,6 +12,7 @@ import Profil from '../screen/Profil/Profil'
 import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
 import FicheTrack from '../screen/Track/FicheTrack'
 import MapPosition from '../screen/Covoiturages/MapPosition'
+import ItineraireCovoiturage from '../screen/Covoiturages/ItineraireCovoiturage'
 
 
 //tab navigation
@@ -54,6 +55,9 @@ const CovoiturageStackNavigator = createStackNavigator(
     },
     FicheCovoiturage: {
       screen: FicheCovoiturage,
+    },
+    ItineraireCovoiturage: {
+      screen: ItineraireCovoiturage,
     },
     MapPosition: {
       screen: MapPosition,
