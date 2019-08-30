@@ -12,6 +12,11 @@ import Reinput from 'reinput'
 import CodeCouleur from '../../helpers/CodeCouleur'
 import { Feather } from '@expo/vector-icons';
 import CovList from '../../components/Covoiturage/CovList'
+import {
+  getCovoiturages
+} from '../../API/TrafficAPI'
+import moment from 'moment'
+import DatePicker from 'react-native-datepicker'
 
 class ListeCovoiturage extends React.Component {
   constructor(props) {
@@ -20,129 +25,16 @@ class ListeCovoiturage extends React.Component {
     this.arriveeText = "";
     this.page = 0;
     this.totalPages = 0;
+
+    let date = moment(new Date()).format('YYYY-MM-DD');
+    let time = moment(new Date()).format('HH:mm');
+
     this.state = {
       covoiturages: [
-        {
-          id: 'kkk',
-          depart: 'Mahamasina, Antananarivo, Madagascar',
-          arrivee: 'Itaosy,, Antananarivo, Madagascar,zlbgmzbgezmognmzongznb blfaebgfoagim',
-          totalPassager: 6,
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00'
-        },
-        {
-          id: 'aa',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'bb',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'cc',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'dd',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'ee',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'ff',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'gg',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'hh',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'ii',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'jj',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        },
-        {
-          id: 'kk',
-          depart: 'Tana',
-          arrivee: 'Majunga',
-          nbpassager: 5,
-          date: '2019-08-05',
-          time: '08:00',
-          totalPassager: 3,
-          nbpassager: 1,
-        }
       ],
-      isLoading: false
+      isLoading: false,
+      date: date,
+      time: time
     }
   }
 
@@ -150,13 +42,13 @@ class ListeCovoiturage extends React.Component {
     console.log('text', this.departText);
     if (this.departText.length > 0) {
       this.setState({ isLoading: true })
-      // getFilmsFromApiWithdepartText(this.departText, this.page + 1).then(data => {
+      //  getCovoiturages(this.departText, this.page + 1).then(data => {
       //   this.page = data.page;
       //   this.totalPages = data.total_pages;
       //   this.setState({
       //     covoiturages: [...this.state.films, ...data.results],
       //     isLoading: false
-      //   })
+      // })
       // });
     }
     this.setState({ isLoading: true })
@@ -234,6 +126,56 @@ class ListeCovoiturage extends React.Component {
             </View>
           </View>
 
+          <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}></View>
+              <View style={{ flex: 10, flexDirection: 'row' }}>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <DatePicker
+                    style={{ width: 150 }}
+                    date={this.state.date}
+                    mode="date"
+                    placeholder="Choisir date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        right: 0,
+                        top: 4,
+                      }
+                    }}
+                    onDateChange={(date) => {
+                      {/* let d = date.split("T")
+                      console.log(d) */}
+                      this.setState({ date: date })
+                    }}
+                  />
+                </View>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <DatePicker
+                    style={{ width: 150 }}
+                    date={this.state.time}
+                    mode="time"
+                    placeholder="Choisir date"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        right: 0,
+                        top: 4,
+                      }
+                    }}
+                    onDateChange={(time) => { this.setState({ time: time }) }}
+                  />
+                </View>
+              </View>
+              <View style={{ flex: 1 }}></View>
+            </View>
+          </View>
+
 
           <View style={{ flex: 1, flexDirection: 'column', marginTop: 15 }}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -277,7 +219,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   search_container: {
-    flex: 2,
+    flex: 4,
   },
   covoiturage_container: {
     flex: 8,

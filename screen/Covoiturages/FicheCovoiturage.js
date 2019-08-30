@@ -121,7 +121,7 @@ class FicheCovoiturage extends React.Component {
               title={"Arrivée"}
               coordinate={this.destination}
             >
-              <Image source={require('../../images/ic_flag_finish.png')} style={{ height: 35, width: 35 }} />
+              <Image source={require('../../images/ic_flag_finish.png')} style={{ height: 50, width: 50 }} />
             </MapView.Marker>
           </MapView>
         </View>
