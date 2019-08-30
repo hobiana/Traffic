@@ -51,6 +51,7 @@ class Login extends React.Component {
     _toLogin = async () => {
         const tokenReturn = await authentification(this.email, this.password);
         if (tokenReturn.status == 201) {
+            console.log(tokenReturn.data.accessToken)
             await SecureStore.setItemAsync('secure_token', tokenReturn.data.accessToken);
             this.props.navigation.navigate('Main')
         } else {

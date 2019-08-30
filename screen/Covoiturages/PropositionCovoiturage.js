@@ -11,12 +11,16 @@ import {
   Button,
   ScrollView,
   TouchableOpacity,
+  Alert
 } from 'react-native'
 import Reinput from 'reinput'
 import CodeCouleur from '../../helpers/CodeCouleur'
 import DatePicker from 'react-native-datepicker'
 import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment'
+import {
+  proposerCovoiturage
+} from '../../API/TrafficAPI'
 
 class PropositionCovoiturage extends React.Component {
 
@@ -85,12 +89,55 @@ class PropositionCovoiturage extends React.Component {
 
   _proposer = () => {
     console.log("proposer", this.state)
+    let dateTime = this.state.date + ' ' + this.state.time;
+    if (this.state.coordArriv != "" && this.state.coordDep != "" && this.state.nameLocArriv != "" && this.state.nameLocDep != "" && this.nbpassager != "") {
+      proposerCovoiturage(this.state.coordDep, this.state.coordArriv, this.state.nameLocDep, this.state.nameLocArriv, this.nbpassager, dateTime).then((response) => {
+        if (response.status == 201) {
+          Alert.alert(
+            'Succès',
+            'Votre proposition a été ajouté avec sussès',
+            [
+              { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ],
+            { cancelable: false },
+          );
+          let date = moment(new Date()).format('YYYY-MM-DD');
+          let time = moment(new Date()).format('HH:mm');
 
+          this.setState({
+            coordDep: {},
+            nameLocDep: '',
+            coordArriv: {},
+            nameLocArriv: '',
+            date: date,
+            time: time
+          })
+        } else {
+          Alert.alert(
+            'Erreur',
+            response.data.message,
+            [
+              { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ],
+            { cancelable: false },
+          );
+        }
+      })
+    } else {
+      Alert.alert(
+        'Erreur',
+        'Remplisser tous les champs',
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false },
+      );
+    }
   }
 
   _tobestItineraire = () => {
     console.log("to itineraire")
-     this.props.navigation.navigate('ItineraireCovoiturage', { origin:this.state.coordDep, destination: this.state.coordArriv })
+    this.props.navigation.navigate('ItineraireCovoiturage', { origin: this.state.coordDep, destination: this.state.coordArriv })
   }
 
   render() {

@@ -4,12 +4,7 @@ import ApiKey from './ApiKey';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const base_url = "http://192.168.8.101:3000/";
-const token = SecureStore.getItemAsync('secure_token');
-
-var configToken = {
-    headers: { 'Authorization': "bearer " + token }
-};
+const base_url = "http://192.168.88.18:3000/";
 
 export function getDirection(origin, destination) { //the best direction selon google
     const url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '&units=metric&key=' + ApiKey.Api
@@ -125,9 +120,37 @@ export function getUsers(id) {
 
 
 //covoiturage
-export function proposerCovoiturage(data) {
+export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villearriv, nbPassager, datetime) {
+    let covoiturage = {
+        "departure": {
+            "name": "Itu",
+            "coordinates": {
+                "latitude": -18.9860132,
+                "longitude": 47.5326916
+            }
+        },
+        "arrival": {
+            "name": "Mahamasina, Antananarivo, Madagascar",
+            "coordinates": {
+                "latitude": -18.9860132,
+                "longitude": 47.5326916
+            }
+        },
+        "passengers": [],
+        "totalPassengers": 5,
+        "dateTime": "2019-08-30 11:11",
+        "routes": ""
+    }
+    console.log(url, covoiturage)
     const url = base_url + 'covoiturages';
-    return axios.post(url, data, configToken)
+    var token = await SecureStore.getItemAsync('secure_token');
+
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
+    console.log(configToken)
+
+    return axios.post(url, covoiturage, configToken)
         .then((response) => {
             const rep = {
                 status: response.status,
@@ -138,6 +161,7 @@ export function proposerCovoiturage(data) {
         )
         .catch((error) => {
             console.log(error.response.status)
+            console.log(error.response.data.message)
             const err = {
                 status: error.response.status,
                 data: error.response.data
