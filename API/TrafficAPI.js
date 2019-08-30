@@ -121,25 +121,28 @@ export function getUsers(id) {
 
 //covoiturage
 export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villearriv, nbPassager, datetime) {
+    let pointOrigin = coordDep.lat + "," + coordDep.lon;
+    let pointDestination = coordArriv.lat + "," + coordArriv.lon;
+    let direction = await getDirection(pointOrigin,pointDestination);
     let covoiturage = {
         "departure": {
-            "name": "Itu",
+            "name": villeDep,
             "coordinates": {
-                "latitude": -18.9860132,
-                "longitude": 47.5326916
+                "latitude": coordDep.lat,
+                "longitude": coordDep.lon
             }
         },
         "arrival": {
-            "name": "Mahamasina, Antananarivo, Madagascar",
+            "name": villearriv,
             "coordinates": {
-                "latitude": -18.9860132,
-                "longitude": 47.5326916
+                "latitude": coordArriv.lat,
+                "longitude": coordArriv.lon
             }
         },
         "passengers": [],
-        "totalPassengers": 5,
-        "dateTime": "2019-08-30 11:11",
-        "routes": ""
+        "totalPassengers": nbPassager,
+        "dateTime": datetime,
+        "routes": direction.data.routes[0].overview_polyline.points
     }
     console.log(url, covoiturage)
     const url = base_url + 'covoiturages';
