@@ -9,33 +9,60 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
-    Text
+    Text,
+    Alert
 } from 'react-native'
 import { connect } from 'react-redux'
 import bgimage from '../../images/bgimage.png'
 import traffic from '../../images/app_logo.png'
 import { TextInput } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
+import {
+    authentification
+} from '../../API/TrafficAPI'
+ import * as SecureStore from 'expo-secure-store';
 
 const { width: WIDTH } = Dimensions.get('window')
 class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            showPassword: false
+            showPassword: false,
+            dialog: false
         }
+        this.email = "hobiana@yahoo.com";
+        this.password = "hobs";
     }
 
     //https://www.youtube.com/watch?v=QtuZJPwZXvo
 
-    _toInscription = () => {
-        this.props.navigation.navigate('Inscription')
-        console.log(this.props.navigation)
+    _emailChangeText = (text) => {
+        this.email = text;
     }
 
-    _toLogin = () => {
-        this.props.navigation.navigate('Main')
-        console.log(this.props.navigation)
+    _passwordChangeText = (text) => {
+        this.password = text;
+    }
+
+    _toInscription = () => {
+        this.props.navigation.navigate('Inscription')
+    }
+
+    _toLogin = async () => {
+        const tokenReturn = await authentification(this.email, this.password);
+        if (tokenReturn.status == 201) {
+            await SecureStore.setItemAsync('secure_token', tokenReturn.data.accessToken);
+            this.props.navigation.navigate('Main')
+        } else {
+            Alert.alert(
+                'Erreur',
+                'Erreur de mot de passe ou d\'email',
+                [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ],
+                { cancelable: false },
+            );
+        }
     }
 
     showPassword = () => {
@@ -44,7 +71,6 @@ class Login extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <ImageBackground
                 source={bgimage}
@@ -69,10 +95,12 @@ class Login extends React.Component {
                             style={styles.inputIcon}
                         />
                         <TextInput
-                            placeholder={'Pseudo'}
+                            placeholder={'Email'}
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
-                            style={styles.input} />
+                            style={styles.input}
+                            //value={"hobiana@yahoo.com"}
+                            onChangeText={(text) => this._emailChangeText(text)} />
                     </View>
 
                     <View style={styles.inputContainer}>
@@ -87,7 +115,11 @@ class Login extends React.Component {
                             placeholderTextColor={'rgba(255,255,255,0.7)'}
                             underlineColorAndroid='transparent'
                             secureTextEntry={!this.state.showPassword}
-                            style={styles.input} />
+                            style={styles.input}
+                            onChangeText={(text) => this._passwordChangeText(text)}
+                        //value={"hobs"}
+                        />
+
                         <TouchableOpacity style={styles.btnEye}
                             onPress={this.showPassword}>
                             <Feather
@@ -145,7 +177,7 @@ const styles = StyleSheet.create({
         paddingLeft: 45,
         fontSize: 16,
         backgroundColor: 'rgba(0,0,0,0.35)',
-        color: 'rgba(255,255,255,0.7)',
+        color: '#fff',
         marginHorizontal: 25,
     },
     inputIcon: {

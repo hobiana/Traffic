@@ -3,7 +3,7 @@
 import React from 'react' // N'oubliez pas l'import de React ici. On en a besoin pour rendre nos components React Native Image ! 
 import { StyleSheet, Image } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
-import  Code  from '../helpers/CodeCouleur'
+import Code from '../helpers/CodeCouleur'
 import Login from '../screen/Authentification/Login'
 import Inscription from '../screen/Authentification/Inscription'
 import Home from '../screen/Home/Home'
@@ -12,6 +12,7 @@ import Profil from '../screen/Profil/Profil'
 import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
 import FicheTrack from '../screen/Track/FicheTrack'
 import MapPosition from '../screen/Covoiturages/MapPosition'
+import ItineraireCovoiturage from '../screen/Covoiturages/ItineraireCovoiturage'
 
 
 //tab navigation
@@ -26,7 +27,7 @@ const navoptions =
     headerStyle: {
       backgroundColor: Code.fondCouleur
     },
-    titleStyle:{
+    titleStyle: {
       alignSelf: 'center'
     }
   }
@@ -52,8 +53,11 @@ const CovoiturageStackNavigator = createStackNavigator(
         title: 'Covoiturage'
       }
     },
-    FicheCovoiturage:{
+    FicheCovoiturage: {
       screen: FicheCovoiturage,
+    },
+    ItineraireCovoiturage: {
+      screen: ItineraireCovoiturage,
     },
     MapPosition: {
       screen: MapPosition,
@@ -85,7 +89,7 @@ const TrackStackNavigator = createStackNavigator(
         title: 'Localisation'
       }
     },
-    FicheTrack:{
+    FicheTrack: {
       screen: FicheTrack
     }
   },
@@ -190,9 +194,9 @@ const styles = StyleSheet.create({
 
 const AppSwitchNavigator = createSwitchNavigator(
   {
-    Login: TrafficTabNavigator,
+    Login: Login,
     Inscription: Inscription,
-    Main: Login
+    Main: TrafficTabNavigator
   }
 )
 
