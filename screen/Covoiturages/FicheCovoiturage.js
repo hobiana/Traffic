@@ -10,8 +10,8 @@ import {
   Image
 } from 'react-native'
 import MapView from 'react-native-maps'
-// import MapViewDirections from 'react-native-maps-directions';
-// import Apikey from '../../API/ApiKey'
+import moment from 'moment'
+import polyline from '@mapbox/polyline'
 
 class FicheCovoiturage extends React.Component {
   constructor(props) {
@@ -32,6 +32,14 @@ class FicheCovoiturage extends React.Component {
   }
 
   render() {
+    const covoiturage = this.props.navigation.state.params.covoiturage;
+    let coords = polyline.decode(covoiturage.routes)
+    let routes = coords.map((point, indice) => {
+      return {
+        latitude: point[0],
+        longitude: point[1]
+      }
+    })
     return (
       <View style={styles.main_container}>
         <View style={styles.details_container}>
@@ -40,7 +48,7 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.textLibelle}>Départ :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text} numberOfLines={2}>Mahamasina, Antananarivo, Madagascar</Text>
+              <Text style={styles.text} numberOfLines={2}>{covoiturage.departure.name}</Text>
             </View>
           </View>
 
@@ -49,7 +57,7 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.textLibelle}>Arrivée :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text} numberOfLines={6}>Mahamasina</Text>
+              <Text style={styles.text} numberOfLines={6}>{covoiturage.arrival.name}</Text>
             </View>
           </View>
 
@@ -58,25 +66,25 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.textLibelle}>Places :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text}>5/8</Text>
+              <Text style={styles.text}>{covoiturage.passengers.length}/{covoiturage.totalPassengers}</Text>
             </View>
           </View>
 
-          <View style={styles.ligne}>
+          {/* <View style={styles.ligne}>
             <View style={styles.libelle}>
               <Text style={styles.textLibelle}>Véhicules :</Text>
             </View>
             <View style={styles.data}>
               <Text style={styles.text}>Renault</Text>
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.ligne}>
             <View style={styles.libelle}>
               <Text style={styles.textLibelle}>Contact :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text}>+261</Text>
+              <Text style={styles.text}>{covoiturage.clientPurpose.email}</Text>
             </View>
           </View>
 
@@ -85,7 +93,7 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.textLibelle}>Date et heure :</Text>
             </View>
             <View style={styles.data}>
-              <Text style={styles.text}>2019-08-01 08:00</Text>
+              <Text style={styles.text}>{moment(covoiturage.dateTime).format('YYYY-MM-DD HH:mm')}</Text>
             </View>
           </View>
 
@@ -106,21 +114,40 @@ class FicheCovoiturage extends React.Component {
           <MapView
             style={styles.map}
             initialRegion={{
-              latitude: -18.9841083,
-              longitude: 47.5362746,
-              latitudeDelta: 0.1,
-              longitudeDelta: 0.1,
+              latitude: -18.971814104580773,
+              longitude: 47.49535007402301,
+              latitudeDelta: 4.384841647609761,
+              longitudeDelta: 2.481059767305858,
             }}
+          //onRegionChange={this.onRegionChange}
           >
+            <MapView.Polyline
+              coordinates={routes}
+              strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeColors={[
+                '#7F0000',
+                '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                '#B24112',
+                '#E5845C',
+                '#238C23',
+                '#7F0000'
+              ]}
+              strokeWidth={6}
+            />
 
             <MapView.Marker
               title={"Départ"}
-              coordinate={this.origin} />
+              coordinate={{
+                latitude: covoiturage.departure.location.coordinates[0],
+                longitude: covoiturage.departure.location.coordinates[1],
+              }} />
 
             <MapView.Marker
               title={"Arrivée"}
-              coordinate={this.destination}
-            >
+              coordinate={{
+                latitude: covoiturage.arrival.location.coordinates[0],
+                longitude: covoiturage.arrival.location.coordinates[1],
+              }} >
               <Image source={require('../../images/ic_flag_finish.png')} style={{ height: 50, width: 50 }} />
             </MapView.Marker>
           </MapView>

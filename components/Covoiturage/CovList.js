@@ -11,26 +11,27 @@ class CovList extends React.Component {
         super(props)
     }
 
-    _displayDetailForCovoiturage = (id) => {
+    _displayDetailForCovoiturage = (item) => {
         // On a récupéré les informations de la navigation, on peut afficher le détail du film
-        this.props.navigation.navigate('FicheCovoiturage')
+        this.props.navigation.navigate('FicheCovoiturage', { covoiturage: item })
     }
 
     render() {
+        console.log(this.props.covoiturages.length)
         return (
             <FlatList
                 style={styles.list}
                 data={this.props.covoiturages}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item._id.toString()}
                 renderItem={({ item }) => (
                     <CovItem
                         covoiturage={item}
                         displayDetailForCovoiturages={this._displayDetailForCovoiturage}
                     />
                 )}
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={0.75}
                 onEndReached={() => {
-                    if (!this.props.favoriteList && this.props.page < this.props.totalPages) {
+                    if (this.props.page < this.props.totalPages) {
                         // On appelle la méthode loadFilm du component Search pour charger plus de films
                         this.props.loadCovoiturages()
                     }

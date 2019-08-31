@@ -3,8 +3,9 @@ import APIkey from './ApiKey'
 import ApiKey from './ApiKey';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { AsyncStorage } from 'react-native';
 
-const base_url = "http://192.168.88.18:3000/";
+const base_url = "http://192.168.8.102:3000/";
 
 export function getDirection(origin, destination) { //the best direction selon google
     const url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '&units=metric&key=' + ApiKey.Api
@@ -16,8 +17,7 @@ export function getDirection(origin, destination) { //the best direction selon g
                 data: response.data
             }
             return rep;
-        }
-        )
+        })
         .catch((error) => {
             console.log(error.response.status)
             const err = {
@@ -123,20 +123,24 @@ export function getUsers(id) {
 export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villearriv, nbPassager, datetime) {
     let pointOrigin = coordDep.lat + "," + coordDep.lon;
     let pointDestination = coordArriv.lat + "," + coordArriv.lon;
-    let direction = await getDirection(pointOrigin,pointDestination);
+
+    var user = await AsyncStorage.getItem('user_connected');
+    var token = await SecureStore.getItemAsync('secure_token');
+    let direction = await getDirection(pointOrigin, pointDestination);
     let covoiturage = {
+        "clientPurpose": user.userId,
         "departure": {
             "name": villeDep,
-            "coordinates": {
-                "latitude": coordDep.lat,
-                "longitude": coordDep.lon
+            "location": {
+                "type": "Point",
+                "coordinates": [coordDep.lat, coordDep.lon]
             }
         },
         "arrival": {
             "name": villearriv,
-            "coordinates": {
-                "latitude": coordArriv.lat,
-                "longitude": coordArriv.lon
+            "location": {
+                "type": "Point",
+                "coordinates": [coordArriv.lat, coordArriv.lon]
             }
         },
         "passengers": [],
@@ -146,7 +150,6 @@ export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villea
     }
     console.log(url, covoiturage)
     const url = base_url + 'covoiturages';
-    var token = await SecureStore.getItemAsync('secure_token');
 
     var configToken = {
         headers: { Authorization: "Bearer " + token }
@@ -173,10 +176,18 @@ export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villea
         })
 }
 
-export function getCovoiturages(id) { // ra tsy misy id dia listeno miverina
-    let idurl = '/';
-    if (id == null) idurl += id;
-    const url = base_url + 'covoiturages' + idurl
+export async function getCovoiturages(id, page) { // ra tsy misy id dia listeno miverina
+    let idurl = '';
+    if (id != null && id != '') idurl += '/' + id;
+    const url = base_url + 'covoiturages' + idurl + '?page=' + page
+    console.log(url)
+    console.log(page)
+
+    var token = await SecureStore.getItemAsync('secure_token');
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
+
     return axios.get(url, configToken)
         .then((response) => {
             const rep = {

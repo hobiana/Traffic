@@ -30,8 +30,7 @@ class ListeCovoiturage extends React.Component {
     let time = moment(new Date()).format('HH:mm');
 
     this.state = {
-      covoiturages: [
-      ],
+      covoiturages: [],
       isLoading: false,
       date: date,
       time: time
@@ -40,18 +39,20 @@ class ListeCovoiturage extends React.Component {
 
   _loadCovoiturages = () => { // izay fonction misy anio fleche io dia vo bind automatic ary afaka ampiasana any @ components hafa
     console.log('text', this.departText);
-    if (this.departText.length > 0) {
-      this.setState({ isLoading: true })
-      //  getCovoiturages(this.departText, this.page + 1).then(data => {
-      //   this.page = data.page;
-      //   this.totalPages = data.total_pages;
-      //   this.setState({
-      //     covoiturages: [...this.state.films, ...data.results],
-      //     isLoading: false
-      // })
-      // });
-    }
+    // if (this.departText.length > 0) {
     this.setState({ isLoading: true })
+    getCovoiturages('',this.page+1).then(data => {
+      this.page = data.data.page;
+      this.totalPages = data.data.total_pages;
+      console.log("results",data.data.results)
+      console.log("page",this.page)
+      console.log("results",this.totalPages)
+      this.setState({
+        covoiturages: [...this.state.covoiturages, ...data.data.results],
+        isLoading: false
+      })
+    });
+    // }
   }
 
   _displayLoading() {
@@ -75,13 +76,18 @@ class ListeCovoiturage extends React.Component {
     this.arriveeText = text;
   }
 
-  _searchCovoiturages = () => {
+  _searchCovoiturages() {
     this.page = 0;
     this.totalPages = 0;
-    this._loadCovoiturages()
+    this.setState({
+      covoiturages: []
+    }, () => {
+      this._loadCovoiturages()
+    })
   }
 
   render() {
+    console.log("render")
     return (
       <View style={styles.main_container}>
         <View style={styles.search_container}>

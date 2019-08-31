@@ -10,7 +10,8 @@ import {
     Dimensions,
     TouchableOpacity,
     Text,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native'
 import { connect } from 'react-redux'
 import bgimage from '../../images/bgimage.png'
@@ -53,6 +54,7 @@ class Login extends React.Component {
         if (tokenReturn.status == 201) {
             console.log(tokenReturn.data.accessToken)
             await SecureStore.setItemAsync('secure_token', tokenReturn.data.accessToken);
+            await AsyncStorage.setItem('user_connected', JSON.stringify(tokenReturn.data.user));
             this.props.navigation.navigate('Main')
         } else {
             Alert.alert(

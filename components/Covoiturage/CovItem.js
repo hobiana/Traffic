@@ -7,29 +7,28 @@ import CodeCouleur from '../../helpers/CodeCouleur'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 class FilmItem extends React.Component {
-    con
-
 
     render() {
         const { covoiturage, displayDetailForCovoiturages } = this.props
-        const firstLetters = covoiturage.depart.charAt(0) + covoiturage.arrivee.charAt(0);
+        console.log(covoiturage._id)
+        const firstLetters = covoiturage.departure.name.charAt(0) + covoiturage.arrival.name.charAt(0);
         return (
             <FadeIn>
                 <TouchableOpacity
                     style={styles.main_container}
-                    onPress={() => displayDetailForCovoiturages(covoiturage.id)}>
+                    onPress={() => displayDetailForCovoiturages(covoiturage)}>
                     <View style={styles.letters_container}>
                         <Text style={styles.letter_text}>{firstLetters.toUpperCase()}</Text>
                     </View>
                     <View style={styles.desc_container}>
-                        <Text style={styles.desc_text} numberOfLines={3}>{covoiturage.depart} <FontAwesome name="chevron-right" /> {covoiturage.arrivee} </Text>
+                        <Text style={styles.desc_text} numberOfLines={3}>{covoiturage.departure.name} <FontAwesome name="chevron-right" /> {covoiturage.arrival.name} </Text>
                     </View>
                     <View style={styles.nbpassager_container}>
                         <View style={{ flex: 1 }}>
                             <Text style={styles.nbpassager_text}>Places</Text>
                         </View>
                         <View style={{ flex: 2, justifyContent: 'center', }}>
-                            <Text style={styles.nbpassager_text}>{covoiturage.nbpassager}/{covoiturage.totalPassager}</Text>
+                            <Text style={styles.nbpassager_text}>{covoiturage.passengers.length}/{covoiturage.totalPassengers}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>

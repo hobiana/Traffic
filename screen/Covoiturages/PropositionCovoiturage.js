@@ -11,7 +11,8 @@ import {
   Button,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native'
 import Reinput from 'reinput'
 import CodeCouleur from '../../helpers/CodeCouleur'
