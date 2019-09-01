@@ -35,6 +35,27 @@ export function getDirections(origin, destination) {
         .catch((error) => console.error(error))
 }
 
+//coordonnées envoi constant
+export function sendCoords(data){
+    const url = base_url + 'locations'
+    return axios.post(url, data)
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
+}
+
 // tracking
 export async function getTracks(id) {
     console.log("anaty getTracks", id)
