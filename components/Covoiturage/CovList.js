@@ -13,7 +13,7 @@ class CovList extends React.Component {
 
     _displayDetailForCovoiturage = (item) => {
         // On a récupéré les informations de la navigation, on peut afficher le détail du film
-        this.props.navigation.navigate('FicheCovoiturage', { covoiturage: item })
+        this.props.navigation.navigate('FicheCovoiturage', { covoiturage: item, loadCovoiturages: () => this.props.search() })
     }
 
     render() {

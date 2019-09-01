@@ -7,31 +7,62 @@ import {
   View,
   Text,
   Button,
-  Image
+  Image,
+  Alert
 } from 'react-native'
 import MapView from 'react-native-maps'
 import moment from 'moment'
 import polyline from '@mapbox/polyline'
+import {
+  validerCovoiturage
+} from '../../API/TrafficAPI'
 
 class FicheCovoiturage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      region: {}
+      region: {},
+      accessButton: true
     }
+  }
 
-    this.origin = {
-      latitude: -18.9841083,
-      longitude: 47.5362746,
-    };
-
-    this.destination = {
-      latitude: -18.9188737,
-      longitude: 47.5263146,
-    };
+  _validerCovoiturage(idcovoiturage) {
+    if (this.props.navigation.state.params.covoiturage.passengers.length < this.props.navigation.state.params.covoiturage.totalPassengers) {
+      validerCovoiturage(idcovoiturage).then(rep => {
+        if (rep.status = 201) {
+          Alert.alert(
+            'Succès',
+            'Votre demande a été validé',
+            [
+              { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ],
+            { cancelable: false },
+          );
+          this.setState({
+            accessButton: false
+          })
+          this.props.navigation.state.params.loadCovoiturages();
+          this.props.navigation.goBack();
+        }
+      })
+    } else {
+      Alert.alert(
+        'Infos',
+        'Le nombre de passagers est complet',
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false },
+      );
+      this.setState({
+        accessButton: false
+      })
+      this.props.navigation.goBack();
+    }
   }
 
   render() {
+    console.log("fiche covoiturage", this.props.navigation.state.params.loadCovoiturages)
     const covoiturage = this.props.navigation.state.params.covoiturage;
     let coords = polyline.decode(covoiturage.routes)
     let routes = coords.map((point, indice) => {
@@ -96,17 +127,28 @@ class FicheCovoiturage extends React.Component {
               <Text style={styles.text}>{moment(covoiturage.dateTime).format('YYYY-MM-DD HH:mm')}</Text>
             </View>
           </View>
+          {
+            this.state.accessButton ?
+              <View style={styles.ligne}>
+                <View style={styles.libelle}>
+                  <Button
+                    onPress={() => {
+                      this._validerCovoiturage(covoiturage._id)
+                    }}
+                    title="Covoiturage"
+                  />
+                </View>
+              </View>
+              :
+              <View style={styles.ligne}>
+                <View style={styles.libelle}>
+                  <Button
+                    title="Validé"
+                  />
+                </View>
+              </View>
+          }
 
-          <View style={styles.ligne}>
-            <View style={styles.libelle}>
-              <Button
-                onPress={() => {
-                  this.props.navigation.goBack()
-                }}
-                title="Covoiturage"
-              />
-            </View>
-          </View>
 
 
         </View>

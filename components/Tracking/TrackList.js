@@ -17,12 +17,13 @@ class TrackList extends React.Component {
     }
 
     render() {
+        console.log(this.props.tracks)
         return (
             <FlatList
                 style={styles.list}
                 data={this.props.tracks}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
+                keyExtractor={(item, index) => item.id.toString()+index}
+                renderItem={({ item}) => (
                     <TrackItem
                         track={item}
                         displayDetailForTrack={this._displayDetailForTrack}

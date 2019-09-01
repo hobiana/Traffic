@@ -34,7 +34,6 @@ class MapTrack extends React.Component {
     // });
     let coords =polyline.decode('r|mrBclaaH`ApDLh@AAEAGAM?KBKJEHAJWTwA|AMRENGDGPHPFDH?Xf@D`@DnBF\\J\\l@dBj@vAAF?LFPLJJBTALGHMBK?En@y@PGLAl@LtAV`DLdAJbAX\\LjBjAd@LpDRtAJrDdA~FbB|@R|ARhEl@l@NjAl@TFXD`@ClDi@nHoA~A]d@SLMdB}Bh@g@\\Sb@MbCYfAMj@OlHaDtBs@nAOp@Ax@DjBZp@PVJ^TH?DFDBF@NAJER?vAMpJwApHmA`AQn@Sb@U`@]b@a@~@oA^_@PSd@SzAg@dBc@~Dy@vFqAnAWD?HADGBUCIMQKUGWEyBCs@GmA?a@Bq@L{@Rq@Rc@R_@l@u@tDiEv@iAv@cB\\cAPy@Jk@NyAF_CC_AMuAQcBe@aDqA{Jc@eDKoAGaC@g@BkALwAT}AP_AhA_D~DcIfPi[|@iBr@Hf@F`@BrFNvGTrR^fG?|CIvCK`CO~DYjAMdM_BnDi@r@Kt@GnA@z@Hf@JbA^ZPbAr@tLtJ\\XlCfBhAp@l@Tb@LnAXjALxBHbA@`COnBMjB?nBBnBLxAPzDr@fLtCzDx@bCb@dCXdE`@`Hl@bARf@PpAr@j@h@h@p@~CfEfCdDj@p@p@h@r@`@x@\\zA\\f@H~JbAhCZxAl@XRRRb@t@Lb@R`A@PCJ?jBEv@Gz@WpBOx@GXSl@Yj@k@j@]TmBx@oAf@aH`E}@j@iAn@a@H_@BsAEoCK_I]oDQu@ISGg@Ww@e@m@S')
     let routes = coords.map((point, indice) => {
-      console.log(indice, point)
       return {
         latitude : point[0],
         longitude: point[1]

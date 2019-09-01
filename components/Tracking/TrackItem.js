@@ -8,7 +8,7 @@ import CodeCouleur from '../../helpers/CodeCouleur'
 class TrackItem extends React.Component {
     render() {
         const { track, displayDetailForTrack } = this.props
-        const firstLetters = track.nom.charAt(0) + track.prenom.charAt(0);
+        const firstLetters = track.lastName.charAt(0) + track.firstName.charAt(0);
         return (
             <FadeIn>
                 <TouchableOpacity
@@ -18,7 +18,7 @@ class TrackItem extends React.Component {
                         <Text style={styles.letter_text}>{firstLetters.toUpperCase()}</Text>
                     </View>
                     <View style={styles.desc_container}>
-                        <Text style={styles.desc_text}>{track.nom} {track.prenom}</Text>
+                        <Text style={styles.desc_text}>{track.lastName} {track.firstName}</Text>
                     </View>
                 </TouchableOpacity>
             </FadeIn>

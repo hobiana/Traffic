@@ -9,12 +9,18 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from 'react-native'
 import CodeCouleur from '../../helpers/CodeCouleur'
 import Reinput from 'reinput'
 import TrackList from '../../components/Tracking/TrackList'
 import AntDesign from '@expo/vector-icons/AntDesign'
+import {
+  getTracks,
+  ajouterTracks
+} from '../../API/TrafficAPI'
+import { AsyncStorage } from 'react-native';
 
 class LocaliserTrack extends React.Component {
   constructor(props) {
@@ -23,38 +29,40 @@ class LocaliserTrack extends React.Component {
     this.page = 0;
     this.totalPages = 0;
     this.state = {
-      tracks: [
-        {
-          id: 'kkk',
-          nom: 'Razakanaivo',
-          prenom: 'Hobiana'
-        },
-        {
-          id: 'ssese',
-          nom: 'Rabearivelo',
-          prenom: 'Toky'
-        }
-      ],
+      tracks: [],
       isLoading: false
     }
   }
 
-  _loadListPerson = () => { // izay fonction misy anio fleche io dia vo bind automatic ary afaka ampiasana any @ components hafa
-    console.log('text', this.idUserText);
-    if (this.idUserText.length > 0) {
-      this.setState({ isLoading: true })
-      // getFilmsFromApiWithidUserText(this.idUserText, this.page + 1).then(data => {
-      //   this.page = data.page;
-      //   this.totalPages = data.total_pages;
-      //   this.setState({
-      //     covoiturages: [...this.state.films, ...data.results],
-      //     isLoading: false
-      //   })
-      // });
-    }
-    this.setState({
-      isLoading: true
+  async componentDidMount() {
+    var user = await AsyncStorage.getItem('user_connected');
+    user = JSON.parse(user)
+    getTracks(user.userId).then(async rep => {
+      this.setState({
+        tracks: [...this.state.tracks, ...rep.data],
+        isLoading: false
+      })
     })
+  }
+
+  _loadListPerson = async () => { // izay fonction misy anio fleche io dia vo bind automatic ary afaka ampiasana any @ components hafa
+    this.setState({ isLoading: true })
+    ajouterTracks("5d67ba1961bd4d4004e59077").then(async (rep) => {
+      console.log("vita ajout track")
+      if (rep.status == 201) {
+        var user = await AsyncStorage.getItem('user_connected');
+        user = JSON.parse(user)
+        console.log("vita maka user connecte", user)
+        getTracks(user.userId).then(rep => {
+          console.log("vita final")
+          this.setState({
+            tracks: [...this.state.tracks, ...rep.data],
+            isLoading: false
+          })
+        })
+      }
+    });
+    // }
   }
 
   _searchTextInputChanged(text) {
@@ -76,14 +84,7 @@ class LocaliserTrack extends React.Component {
 
   _addPersonToTrack = () => {
     this.page = 0;
-    this.totalPages = 0
-    // this.setState(
-    //   {
-    //     tracks: []
-    //   }, () => {
-    //     console.log("Page : " + this.page + " / TotalPages : " + this.totalPages + " / Nombre person : " + this.state.tracks.length)
-    //     this._loadListPerson()
-    //   });
+    this.totalPages = 0;
     this.setState(
       {
         tracks: []

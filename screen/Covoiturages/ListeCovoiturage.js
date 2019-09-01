@@ -76,7 +76,7 @@ class ListeCovoiturage extends React.Component {
     this.arriveeText = text;
   }
 
-  _searchCovoiturages() {
+  _searchCovoiturages = () => {
     this.page = 0;
     this.totalPages = 0;
     this.setState({
@@ -207,6 +207,7 @@ class ListeCovoiturage extends React.Component {
           <CovList
             covoiturages={this.state.covoiturages}
             navigation={this.props.navigation}
+            search={this._searchCovoiturages}
             loadCovoiturages={this._loadCovoiturages}
             page={this.page}
             totalPages={this.totalPages}

@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { AsyncStorage } from 'react-native';
 
-const base_url = "http://192.168.8.102:3000/";
+const base_url = "http://192.168.88.13:3000/";
 
 export function getDirection(origin, destination) { //the best direction selon google
     const url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '&units=metric&key=' + ApiKey.Api
@@ -36,22 +36,57 @@ export function getDirections(origin, destination) {
 }
 
 // tracking
-export function getTracks(id) {
-    let idurl = '/';
-    if (id == null) idurl += id;
-    const url = base_url + 'users' + idurl + '/tracks'
+export async function getTracks(id) {
+    console.log("anaty getTracks", id)
+    const url = base_url + 'users/' + id + '/tracks'
+    var token = await SecureStore.getItemAsync('secure_token');
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
     return axios.get(url, configToken)
-        .then((response) => response.data)
-        .catch((error) => console.error(error))
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        })
+        .catch((error) => {
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }
 
-export function ajouterTracks(id, data) {
-    let idurl = '/';
-    if (id == null) idurl += id;
-    const url = base_url + 'users' + idurl + '/tracks'
-    return axios.post(url, data, configToken)
-        .then((response) => response.data)
-        .catch((error) => console.error(error))
+export async function ajouterTracks(iduser) {
+    var user = await AsyncStorage.getItem('user_connected');
+    user = JSON.parse(user)
+    var token = await SecureStore.getItemAsync('secure_token');
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
+    const url = base_url + 'users/' + user.userId + '/tracks'
+    const data = {
+        id: iduser
+    }
+    return axios.patch(url, data, configToken)
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }
 
 //users
@@ -114,8 +149,23 @@ export function getUsers(id) {
     if (id == null) idurl += id;
     const url = base_url + 'users' + idurl
     return axios.get(url, configToken)
-        .then((response) => response.json())
-        .catch((error) => console.error(error))
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            console.log(error.response.status)
+            console.log(error.response.data.message)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
 }
 
 
@@ -199,6 +249,36 @@ export async function getCovoiturages(id, page) { // ra tsy misy id dia listeno 
         )
         .catch((error) => {
             console.log(error.response.status)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
+}
+
+
+export async function validerCovoiturage(idcovoiturage) {
+    var user = await AsyncStorage.getItem('user_connected');
+    user = JSON.parse(user)
+    var token = await SecureStore.getItemAsync('secure_token');
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
+    const url = base_url + 'covoiturages/' + idcovoiturage + '/validate'
+    const data = {
+        "passengerId": user.userId
+    }
+    return axios.patch(url, data, configToken)
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
             const err = {
                 status: error.response.status,
                 data: error.response.data
