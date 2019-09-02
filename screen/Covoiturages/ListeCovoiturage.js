@@ -32,8 +32,10 @@ class ListeCovoiturage extends React.Component {
     this.state = {
       covoiturages: [],
       isLoading: false,
-      date: date,
-      time: time
+      dateDebut: date,
+      dateFin: date,
+      timeDebut: time,
+      timeFin: time
     }
   }
 
@@ -79,6 +81,7 @@ class ListeCovoiturage extends React.Component {
   _searchCovoiturages = () => {
     this.page = 0;
     this.totalPages = 0;
+    console.log(this.state)
     this.setState({
       covoiturages: []
     }, () => {
@@ -139,7 +142,7 @@ class ListeCovoiturage extends React.Component {
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                   <DatePicker
                     style={{ width: 150 }}
-                    date={this.state.date}
+                    date={this.state.dateDebut}
                     mode="date"
                     placeholder="Choisir date"
                     format="YYYY-MM-DD"
@@ -155,14 +158,14 @@ class ListeCovoiturage extends React.Component {
                     onDateChange={(date) => {
                       {/* let d = date.split("T")
                       console.log(d) */}
-                      this.setState({ date: date })
+                      this.setState({ dateDebut: date })
                     }}
                   />
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                   <DatePicker
                     style={{ width: 150 }}
-                    date={this.state.time}
+                    date={this.state.timeDebut}
                     mode="time"
                     placeholder="Choisir date"
                     confirmBtnText="Confirm"
@@ -174,7 +177,57 @@ class ListeCovoiturage extends React.Component {
                         top: 4,
                       }
                     }}
-                    onDateChange={(time) => { this.setState({ time: time }) }}
+                    onDateChange={(time) => { this.setState({ timeDebut: time }) }}
+                  />
+                </View>
+              </View>
+              <View style={{ flex: 1 }}></View>
+            </View>
+          </View>
+
+          <View style={{ flex: 1, flexDirection: 'column' }}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}></View>
+              <View style={{ flex: 10, flexDirection: 'row' }}>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <DatePicker
+                    style={{ width: 150 }}
+                    date={this.state.dateFin}
+                    mode="date"
+                    placeholder="Choisir date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        right: 0,
+                        top: 4,
+                      }
+                    }}
+                    onDateChange={(date) => {
+                      {/* let d = date.split("T")
+                      console.log(d) */}
+                      this.setState({ dateFin: date })
+                    }}
+                  />
+                </View>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <DatePicker
+                    style={{ width: 150 }}
+                    date={this.state.timeFin}
+                    mode="time"
+                    placeholder="Choisir date"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        right: 0,
+                        top: 4,
+                      }
+                    }}
+                    onDateChange={(time) => { this.setState({ timeFin: time }) }}
                   />
                 </View>
               </View>
@@ -226,7 +279,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   search_container: {
-    flex: 4,
+    flex: 5,
   },
   covoiturage_container: {
     flex: 8,

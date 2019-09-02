@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { AsyncStorage } from 'react-native';
 
-const base_url = "http://192.168.88.13:3000/";
+const base_url = "http://192.168.8.102:3000/";
 
 export function getDirection(origin, destination) { //the best direction selon google
     const url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '&units=metric&key=' + ApiKey.Api

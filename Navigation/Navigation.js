@@ -13,6 +13,7 @@ import FicheCovoiturage from '../screen/Covoiturages/FicheCovoiturage'
 import FicheTrack from '../screen/Track/FicheTrack'
 import MapPosition from '../screen/Covoiturages/MapPosition'
 import ItineraireCovoiturage from '../screen/Covoiturages/ItineraireCovoiturage'
+import ItineraireEmbouteillage from '../screen/Embouteillages/ItineraireEmbouteillage'
 
 
 //tab navigation
@@ -55,6 +56,9 @@ const CovoiturageStackNavigator = createStackNavigator(
     },
     FicheCovoiturage: {
       screen: FicheCovoiturage,
+      navigationOptions: {
+        title: 'Fiche Covoiturage'
+      }
     },
     ItineraireCovoiturage: {
       screen: ItineraireCovoiturage,
@@ -75,6 +79,18 @@ const EmbouteillageStackNavigator = createStackNavigator(
       screen: Embouteillage,
       navigationOptions: {
         title: 'Traffic'
+      }
+    },
+    ItineraireEmbouteillage: {
+      screen: ItineraireEmbouteillage,
+      navigationOptions: {
+        title: 'Trajet'
+      }
+    },
+    MapPosition: {
+      screen: MapPosition,
+      navigationOptions: {
+        title: 'Choisir une position'
       }
     }
   },
