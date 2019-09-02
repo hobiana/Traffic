@@ -81,6 +81,30 @@ export async function getTracks(id) {
         })
 }
 
+export async function getPositionUserTracks(id) {
+    console.log("anaty getPositionUserTracks", id)
+    const url = base_url + 'users/' + id + '/tracks/coordinates'
+    var token = await SecureStore.getItemAsync('secure_token');
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
+    return axios.get(url, configToken)
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        })
+        .catch((error) => {
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
+}
+
 export async function ajouterTracks(iduser) {
     var user = await AsyncStorage.getItem('user_connected');
     user = JSON.parse(user)

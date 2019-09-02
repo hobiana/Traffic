@@ -17,7 +17,7 @@ export default class App extends React.Component {
   }
   _sendCoords = async (userData) => {
     let location = await Location.getCurrentPositionAsync({});
-    console.log("mandefa", location)
+    // console.log("mandefa", location)
     // let { status } = await Permissions.askAsync(Permissions.LOCATION);
     const locationData = {
       "userid": userData.userId,
@@ -28,13 +28,15 @@ export default class App extends React.Component {
         "coordinates": [location.coords.latitude, location.coords.longitude]
       }
     }
+    // console.log(locationData)
     sendCoords(locationData).then((results) => {
-      console.log(results)
+      // console.log(results)
     })
   }
 
   async componentDidMount() {
     var user = await AsyncStorage.getItem('user_connected');
+    user = JSON.parse(user);
     console.log(user)
     this._sendCoords(user);
     setInterval(() => {

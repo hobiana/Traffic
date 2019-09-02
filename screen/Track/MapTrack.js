@@ -10,7 +10,12 @@ import {
 } from 'react-native'
 import MapView from 'react-native-maps';
 import { getDirection } from '../../API/TrafficAPI'
-import polyline  from '@mapbox/polyline'
+import polyline from '@mapbox/polyline'
+import moment from 'moment'
+import {
+  getPositionUserTracks
+} from '../../API/TrafficAPI'
+import { AsyncStorage } from 'react-native';
 
 
 class MapTrack extends React.Component {
@@ -18,62 +23,55 @@ class MapTrack extends React.Component {
     super(props)
     this.state = {
       region: {},
-      routes:[]
+      markers: []
     }
   }
 
-  componentDidMount(){
-    // getDirection
-    // getDirection(this.searchedText, this.page + 1).then(data => {
-    //   this.page = data.page;
-    //   this.totalPages = data.total_pages;
-    //   this.setState({
-    //     films: [...this.state.films, ...data.results],
-    //     isLoading: false
-    //   })
-    // });
-    let coords =polyline.decode('r|mrBclaaH`ApDLh@AAEAGAM?KBKJEHAJWTwA|AMRENGDGPHPFDH?Xf@D`@DnBF\\J\\l@dBj@vAAF?LFPLJJBTALGHMBK?En@y@PGLAl@LtAV`DLdAJbAX\\LjBjAd@LpDRtAJrDdA~FbB|@R|ARhEl@l@NjAl@TFXD`@ClDi@nHoA~A]d@SLMdB}Bh@g@\\Sb@MbCYfAMj@OlHaDtBs@nAOp@Ax@DjBZp@PVJ^TH?DFDBF@NAJER?vAMpJwApHmA`AQn@Sb@U`@]b@a@~@oA^_@PSd@SzAg@dBc@~Dy@vFqAnAWD?HADGBUCIMQKUGWEyBCs@GmA?a@Bq@L{@Rq@Rc@R_@l@u@tDiEv@iAv@cB\\cAPy@Jk@NyAF_CC_AMuAQcBe@aDqA{Jc@eDKoAGaC@g@BkALwAT}AP_AhA_D~DcIfPi[|@iBr@Hf@F`@BrFNvGTrR^fG?|CIvCK`CO~DYjAMdM_BnDi@r@Kt@GnA@z@Hf@JbA^ZPbAr@tLtJ\\XlCfBhAp@l@Tb@LnAXjALxBHbA@`COnBMjB?nBBnBLxAPzDr@fLtCzDx@bCb@dCXdE`@`Hl@bARf@PpAr@j@h@h@p@~CfEfCdDj@p@p@h@r@`@x@\\zA\\f@H~JbAhCZxAl@XRRRb@t@Lb@R`A@PCJ?jBEv@Gz@WpBOx@GXSl@Yj@k@j@]TmBx@oAf@aH`E}@j@iAn@a@H_@BsAEoCK_I]oDQu@ISGg@Ww@e@m@S')
-    let routes = coords.map((point, indice) => {
-      return {
-        latitude : point[0],
-        longitude: point[1]
-      }
-    })
-    
-    this.setState({
-      routes: routes
-    })
+  async componentDidMount() {
+    var user = await AsyncStorage.getItem('user_connected');
+    user = JSON.parse(user)
+    setInterval(() => {
+      getPositionUserTracks(user.userId).then(response => {
+        console.log("getPositionUserTracks", response)
+        this.setState({
+          markers: response.data
+        })
+      })
+    }, 60000)
   }
 
   render() {
-
+    console.log("render")
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: -18.91802,
-            longitude: 47.52594,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude: -18.971814104580773,
+            longitude: 47.49535007402301,
+            latitudeDelta: 4.384841647609761,
+            longitudeDelta: 2.481059767305858,
           }}
         >
-          {this.state.routes.length>0?
-          <MapView.Polyline
-            coordinates={this.state.routes}
-            strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-            strokeColors={[
-              '#7F0000',
-              '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-              '#B24112',
-              '#E5845C',
-              '#238C23',
-              '#7F0000'
-            ]}
-            strokeWidth={6}
-          />
-            : null
-        }
+          {this.state.markers.map(marker => (
+            <MapView.Marker
+              key={marker.id}
+              coordinate={{
+                latitude: marker.position[0].location.coordinates[0],
+                longitude: marker.position[0].location.coordinates[1]
+              }}
+              title={marker.firstName}
+            >
+              <MapView.Callout>
+                <View styles={styles.marker_container}>
+                  <Text style={styles.marker}>
+                    {marker.lastName} {moment(marker.position[0].dateTime).format('YYYY-MM-DD HH:mm')}
+                  </Text>
+                </View>
+              </MapView.Callout>
+            </MapView.Marker>
+          ))}
+
         </MapView>
       </View>
     )
@@ -81,6 +79,15 @@ class MapTrack extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  marker_container: {
+    // marginTop: 15
+  },
+  marker: {
+    backgroundColor: '#3498eb',
+    padding: 5,
+    borderRadius: 5,
+    color: '#fff'
+  },
   container: {
     flex: 1,
     alignItems: 'center',
