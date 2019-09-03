@@ -5,7 +5,8 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { AsyncStorage } from 'react-native';
 
-const base_url = "http://192.168.8.102:3000/";
+const base_url = "http://192.168.88.13:3000/";
+// const base_url = "https://apirafffic.herokuapp.com/";
 
 export function getDirection(origin, destination) { //the best direction selon google
     const url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + destination + '&units=metric&key=' + ApiKey.Api
@@ -220,6 +221,7 @@ export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villea
     let pointDestination = coordArriv.lat + "," + coordArriv.lon;
 
     var user = await AsyncStorage.getItem('user_connected');
+    user= JSON.parse(user)
     var token = await SecureStore.getItemAsync('secure_token');
     let direction = await getDirection(pointOrigin, pointDestination);
     let covoiturage = {

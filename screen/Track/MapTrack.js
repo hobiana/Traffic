@@ -30,6 +30,12 @@ class MapTrack extends React.Component {
   async componentDidMount() {
     var user = await AsyncStorage.getItem('user_connected');
     user = JSON.parse(user)
+    getPositionUserTracks(user.userId).then(response => {
+      console.log("getPositionUserTracks", response)
+      this.setState({
+        markers: response.data
+      })
+    })
     setInterval(() => {
       getPositionUserTracks(user.userId).then(response => {
         console.log("getPositionUserTracks", response)

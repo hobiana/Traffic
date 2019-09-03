@@ -16,28 +16,31 @@ export default class App extends React.Component {
     super();
   }
   _sendCoords = async (userData) => {
-    let location = await Location.getCurrentPositionAsync({});
-    // console.log("mandefa", location)
-    // let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    const locationData = {
-      "userid": userData.userId,
-      "datetime": new Date(),
-      "speed": location.coords.speed,
-      "location": {
-        "type": "Point",
-        "coordinates": [location.coords.latitude, location.coords.longitude]
+    if (userData != null) {
+      let location = await Location.getCurrentPositionAsync({});
+      // console.log("mandefa", location)
+      // let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      const locationData = {
+        "userid": userData.userId,
+        "datetime": new Date(),
+        "speed": location.coords.speed,
+        "location": {
+          "type": "Point",
+          "coordinates": [location.coords.latitude, location.coords.longitude]
+        }
       }
+      // console.log(locationData)
+      sendCoords(locationData).then((results) => {
+        // console.log(results)
+      })
     }
-    // console.log(locationData)
-    sendCoords(locationData).then((results) => {
-      // console.log(results)
-    })
+
   }
 
   async componentDidMount() {
     var user = await AsyncStorage.getItem('user_connected');
     user = JSON.parse(user);
-    console.log(user)
+    console.log("componentApps ",user)
     this._sendCoords(user);
     setInterval(() => {
       this._sendCoords(user);
