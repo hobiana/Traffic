@@ -43,12 +43,12 @@ class ListeCovoiturage extends React.Component {
     console.log('text', this.departText);
     // if (this.departText.length > 0) {
     this.setState({ isLoading: true })
-    getCovoiturages('',this.page+1).then(data => {
+    getCovoiturages('', this.page + 1, this.departText, this.arriveeText, this.state.dateDebut, this.state.dateFin, this.state.timeDebut, this.state.timeFin).then(data => {
       this.page = data.data.page;
       this.totalPages = data.data.total_pages;
-      console.log("results",data.data.results)
-      console.log("page",this.page)
-      console.log("results",this.totalPages)
+      console.log("results", data.data.results)
+      console.log("page", this.page)
+      console.log("results", this.totalPages)
       this.setState({
         covoiturages: [...this.state.covoiturages, ...data.data.results],
         isLoading: false

@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { AsyncStorage } from 'react-native';
 
-const base_url = "http://192.168.88.13:3000/";
+const base_url = "http://192.168.8.101:3000/";
 // const base_url = "https://apirafffic.herokuapp.com/";
 
 export function getDirection(origin, destination) { //the best direction selon google
@@ -37,7 +37,7 @@ export function getDirections(origin, destination) {
 }
 
 //coordonnées envoi constant
-export function sendCoords(data){
+export function sendCoords(data) {
     const url = base_url + 'locations'
     return axios.post(url, data)
         .then((response) => {
@@ -221,7 +221,7 @@ export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villea
     let pointDestination = coordArriv.lat + "," + coordArriv.lon;
 
     var user = await AsyncStorage.getItem('user_connected');
-    user= JSON.parse(user)
+    user = JSON.parse(user)
     var token = await SecureStore.getItemAsync('secure_token');
     let direction = await getDirection(pointOrigin, pointDestination);
     let covoiturage = {
@@ -273,10 +273,10 @@ export async function proposerCovoiturage(coordDep, coordArriv, villeDep, villea
         })
 }
 
-export async function getCovoiturages(id, page) { // ra tsy misy id dia listeno miverina
+export async function getCovoiturages(id, page, origin, destination, datedebut, datefin, timedebut, timefin) { // ra tsy misy id dia listeno miverina
     let idurl = '';
     if (id != null && id != '') idurl += '/' + id;
-    const url = base_url + 'covoiturages' + idurl + '?page=' + page
+    const url = base_url + 'covoiturages' + idurl + '?page=' + page + '&origin=' + origin + '&destination=' + destination + '&datedebut=' + datedebut + '&datefin=' + datefin + '&timedebut=' + timedebut + '&timefin=' + timefin
     console.log(url)
     console.log(page)
 
