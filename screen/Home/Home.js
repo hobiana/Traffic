@@ -21,7 +21,7 @@ class Home extends React.Component {
                 <ScrollView>
                     <View style={styles.logo_container}>
                         <Image
-                            source={require('../../images/ic_logo.png')}
+                            source={require('../../assets/ic_logo.png')}
                         />
                     </View>
                     <View style={styles.desc_container}>

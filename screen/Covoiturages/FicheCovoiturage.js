@@ -190,7 +190,7 @@ class FicheCovoiturage extends React.Component {
                 latitude: covoiturage.arrival.location.coordinates[0],
                 longitude: covoiturage.arrival.location.coordinates[1],
               }} >
-              <Image source={require('../../images/ic_flag_finish.png')} style={{ height: 50, width: 50 }} />
+              <Image source={require('../../assets/ic_flag_finish.png')} style={{ height: 50, width: 50 }} />
             </MapView.Marker>
           </MapView>
         </View>

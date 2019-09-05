@@ -12,7 +12,7 @@ class HomeCovoiturage extends React.Component {
             <FadeIn>
                 <View style={styles.main_container}>
                     <View style={styles.image_container}>
-                        <Image source={require('../../images/ic_covoiture.png')} />
+                        <Image source={require('../../assets/ic_covoiture.png')} />
                     </View>
                     <View style={styles.details_container}>
                         <View style={{ flex: 1, flexDirection: 'column' }}>

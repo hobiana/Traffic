@@ -124,7 +124,7 @@ class ItineraireCovoiturage extends React.Component {
                                 latitude: this.state.destination.lat,
                                 longitude: this.state.destination.lon,
                             }} >
-                            <Image source={require('../../images/ic_flag_finish.png')} style={{ height: 50, width: 50 }} />
+                            <Image source={require('../../assets/ic_flag_finish.png')} style={{ height: 50, width: 50 }} />
                         </MapView.Marker>}
                 </MapView>
             </View>

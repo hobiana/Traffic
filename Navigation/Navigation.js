@@ -143,7 +143,7 @@ const TrafficTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
           return <Image
-            source={require('../images/ic_menu_home.png')}
+            source={require('../assets/ic_menu_home.png')}
             style={styles.icon} /> // On applique un style pour les redimensionner comme il faut
         }
       }
@@ -154,7 +154,7 @@ const TrafficTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
-            source={require('../images/ic_menu_carpooling.png')}
+            source={require('../assets/ic_menu_carpooling.png')}
             style={styles.icon} />
         }
       }
@@ -164,7 +164,7 @@ const TrafficTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
-            source={require('../images/ic_menu_tracking.png')}
+            source={require('../assets/ic_menu_tracking.png')}
             style={styles.icon} />
         }
       }
@@ -174,7 +174,7 @@ const TrafficTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
-            source={require('../images/ic_menu_traffic.png')}
+            source={require('../assets/ic_menu_traffic.png')}
             style={styles.icon} />
         }
       }
@@ -184,7 +184,7 @@ const TrafficTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
-            source={require('../images/ic_menu_profil.png')}
+            source={require('../assets/ic_menu_profil.png')}
             style={styles.icon} />
         }
       }

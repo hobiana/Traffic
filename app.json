@@ -14,9 +14,9 @@
     },
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./images/ic_logo.png",
+    "icon": "./assets/ic_app_logo.png",
     "splash": {
-      "image": "./images/app_logo.png",
+      "image": "./assets/splash_traffic.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

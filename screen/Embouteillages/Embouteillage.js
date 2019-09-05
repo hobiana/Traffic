@@ -18,6 +18,9 @@ import {
 import Reinput from 'reinput'
 import CodeCouleur from '../../helpers/CodeCouleur'
 import EmbouteillageList from '../../components/Embouteillage/EmbouteillageList'
+import {
+  getTraffic
+} from '../../API/TrafficAPI'
 
 class Embouteillage extends React.Component {
   constructor(props) {
@@ -25,9 +28,15 @@ class Embouteillage extends React.Component {
     this.page = 0;
     this.totalPages = 0;
     this.state = {
-      coordDep: {},
+      coordDep: {
+        "lat": -18.9188737,
+        "lon": 47.5263146,
+      },
       nameLocDep: '',
-      coordArriv: {},
+      coordArriv: {
+        "lat": -18.9859782,
+        "lon": 47.532721,
+      },
       nameLocArriv: '',
       embouteillages: [
         {
@@ -95,22 +104,27 @@ class Embouteillage extends React.Component {
     console.log(this.state)
   }
 
-  _loadEmbouteillages = () => { // izay fonction misy anio fleche io dia vo bind automatic ary afaka ampiasana any @ components hafa
-    // console.log('text', this.departText);
-    // if (this.departText.length > 0) {
-    // this.setState({ isLoading: true })
-    // getCovoiturages('',this.page+1).then(data => {
-    //   this.page = data.data.page;
-    //   this.totalPages = data.data.total_pages;
-    //   console.log("results",data.data.results)
-    //   console.log("page",this.page)
-    //   console.log("results",this.totalPages)
-    //   this.setState({
-    //     covoiturages: [...this.state.covoiturages, ...data.data.results],
-    //     isLoading: false
-    //   })
-    // });
-    // }
+  _loadEmbouteillages = () => {
+
+    console.log(this.state.coordDep)
+    console.log(this.state.coordArriv)
+    if (typeof this.state.coordDep.lat != 'undefined' && typeof this.state.coordArriv.lat) {
+      this.setState({ isLoading: true })
+      let origin = this.state.coordDep.lat + "," + this.state.coordDep.lon;
+      let destination = this.state.coordArriv.lat + "," + this.state.coordArriv.lon;
+      getTraffic(origin, destination).then(rep => {
+        this.setState({
+          embouteillages: [...this.state.embouteillages, ...rep.data],
+          isLoading: false
+        })
+      })
+    } else {
+      Alert.alert(
+        'Erreur',
+        'Remplisser les coordonnées de départ et d\'arriver'
+      )
+    }
+
   }
 
   _searchEmbouteillages = () => {
@@ -160,7 +174,7 @@ class Embouteillage extends React.Component {
                   onPress={() => this.props.navigation.navigate('MapPosition', { returnFunction: this._departChangeValueFromMapPosition })}
                 >
                   <Image
-                    source={require('../../images/ic_position.png')}
+                    source={require('../../assets/ic_position.png')}
                     style={styles.icon} />
                 </TouchableOpacity>
               </View>
@@ -192,7 +206,7 @@ class Embouteillage extends React.Component {
                   onPress={() => this.props.navigation.navigate('MapPosition', { returnFunction: this._arriveeChangeValueFromMapPosition })}
                 >
                   <Image
-                    source={require('../../images/ic_position.png')}
+                    source={require('../../assets/ic_position.png')}
                     style={styles.icon} />
                 </TouchableOpacity>
               </View>
@@ -208,7 +222,9 @@ class Embouteillage extends React.Component {
                 /> */}
 
             <Button
-              onPress={this._proposer}
+              onPress={() => {
+                this._searchEmbouteillages()
+              }}
               style={styles.btnProposer}
               title='Voir le traffic'
               type="outline"

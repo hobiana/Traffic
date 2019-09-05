@@ -13,8 +13,8 @@ import {
     Alert
 } from 'react-native'
 import { connect } from 'react-redux'
-import bgimage from '../../images/bgimage.png'
-import traffic from '../../images/app_logo.png'
+import bgimage from '../../assets/bgimage.png'
+import traffic from '../../assets/app_logo.png'
 import { TextInput } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import {

@@ -26,7 +26,7 @@ class EmbouteillageItem extends React.Component {
                             <Text style={styles.nbpassager_text}>Distance</Text>
                         </View>
                         <View style={{ flex: 2, justifyContent: 'center', }}>
-                            <Text style={styles.nbpassager_text}>15 km</Text>
+                            <Text style={styles.nbpassager_text}>{embouteillage.distance} km</Text>
                         </View>
                     </View>
                     <View style={styles.nbpassager_container}>
@@ -34,7 +34,7 @@ class EmbouteillageItem extends React.Component {
                             <Text style={styles.nbpassager_text}>Traffic</Text>
                         </View>
                         <View style={{ flex: 2, justifyContent: 'center', }}>
-                            <Text style={styles.nbpassager_text}>5%</Text>
+                            <Text style={styles.nbpassager_text}>{embouteillage.pourcentage}%</Text>
                         </View>
                     </View>
                 </TouchableOpacity>

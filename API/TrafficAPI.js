@@ -333,3 +333,32 @@ export async function validerCovoiturage(idcovoiturage) {
             return err;
         })
 }
+
+//embouteillage
+
+export async function getTraffic(origin, destination) {
+    const url = base_url + 'traffics?origin=' + origin + '&destination=' + destination
+    console.log(url)
+    var token = await SecureStore.getItemAsync('secure_token');
+    var configToken = {
+        headers: { Authorization: "Bearer " + token }
+    };
+
+    return axios.get(url, configToken)
+        .then((response) => {
+            const rep = {
+                status: response.status,
+                data: response.data
+            }
+            return rep;
+        }
+        )
+        .catch((error) => {
+            console.log(error.response.status)
+            const err = {
+                status: error.response.status,
+                data: error.response.data
+            }
+            return err;
+        })
+}

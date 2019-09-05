@@ -12,7 +12,7 @@ class HomeTraffic extends React.Component {
             <FadeIn>
                 <View style={styles.main_container}>
                     <View style={styles.image_container}>
-                        <Image source={require('../../images/traffic.png')} />
+                        <Image source={require('../../assets/traffic.png')} />
                     </View>
                     <View style={styles.details_container}>
                         <View style={{ flex: 1, flexDirection: 'column' }}>

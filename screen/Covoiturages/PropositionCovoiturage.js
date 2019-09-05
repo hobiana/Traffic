@@ -165,7 +165,7 @@ class PropositionCovoiturage extends React.Component {
                     onPress={() => this.props.navigation.navigate('MapPosition', { returnFunction: this._departChangeValueFromMapPosition })}
                   >
                     <Image
-                      source={require('../../images/ic_position.png')}
+                      source={require('../../assets/ic_position.png')}
                       style={styles.icon} />
                   </TouchableOpacity>
                 </View>
@@ -197,7 +197,7 @@ class PropositionCovoiturage extends React.Component {
                     onPress={() => this.props.navigation.navigate('MapPosition', { returnFunction: this._arriveeChangeValueFromMapPosition })}
                   >
                     <Image
-                      source={require('../../images/ic_position.png')}
+                      source={require('../../assets/ic_position.png')}
                       style={styles.icon} />
                   </TouchableOpacity>
                 </View>

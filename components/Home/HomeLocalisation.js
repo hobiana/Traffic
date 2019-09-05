@@ -28,7 +28,7 @@ class HomeLocalisation extends React.Component {
                         </View>
                     </View>
                     <View style={styles.image_container}>
-                        <Image source={require('../../images/home_localisation.png')} />
+                        <Image source={require('../../assets/home_localisation.png')} />
                     </View>
                 </View>
             </FadeInRight>
