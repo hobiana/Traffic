@@ -29,32 +29,16 @@ class Embouteillage extends React.Component {
     this.totalPages = 0;
     this.state = {
       coordDep: {
-        "lat": -18.9188737,
-        "lon": 47.5263146,
+        //"lat": -18.9188737,
+        //"lon": 47.5263146,
       },
       nameLocDep: '',
       coordArriv: {
-        "lat": -18.9859782,
-        "lon": 47.532721,
+        //"lat": -18.9859782,
+        //"lon": 47.532721,
       },
       nameLocArriv: '',
-      embouteillages: [
-        {
-          distance: 15,
-          pourcentage: 10,
-          routes: "nf{rBavbaHNi@RJt@h@h@RRDjBHfDPbI\\jCJt@C`@ITKpBoA`HaEnAg@lBy@\\Uj@k@Xk@ZgANy@VqBRq@Lc@Xc@n@s@FODAFELOFQ@SAUGQKOCEIEiCaBaAk@mA]}@MwLkAuB[{@Uy@]eBkAqA{AkAaBsEeG_@_@o@i@wAo@q@Q}D_@}Hs@eBSaC_@wDu@aKiCyCo@kASuAU_BMuBIsBC{CNaBJiABmAEkBIoAS_AYyAm@iC_Bq@g@qEoD}F{EyAcAaA_@gASw@Gq@?yAJiCb@gNfBeALcBLcG`@gGPkABoC?wDCyNYiGUoGOcAIgAMiClFgOlYeCdFYl@s@rBSr@O`AWvBEz@A~BJlCZ~BtAjKd@dDX~BPxB@~@EnAIrAMz@e@hBe@lAUd@[j@{@jAcEvEUZUd@Un@Q`AEjAFnBH~CC`AABAB[\\a@NqCn@eHxAiB`@sAb@UJGBKIIKEEy@oAc@g@YQc@Q{@Si@CaDZo@AiBQQEUOQYe@gAq@{ASWs@m@SWKSQk@e@wAY]{AsAUKQC{AAgBCq@No@Xo@Re@@_AW[K_Ai@u@k@UUQDeG~BmE|AeAV[@oCWcK_B}Di@iF}@aBYe@Bc@L[XSl@Ih@Ab@c@CwAYeCaAiAG{A_@q@Ok@CgAHuAf@oAx@]ZuAfAg@Xc@H]@i@YE]OUWUq@WiIWkBGgCW]?OBe@T_@^Mb@E^?d@VdAbAlDLb@"
-        },
-        {
-          distance: 8.8,
-          pourcentage: 20,
-          routes: "nf{rBavbaHNi@UI]GgAOuACe@BuAR_D`@aANyATcBLy@@kAIkCi@mBOo@EcEMwBCiE?}BDeCX_D^u@PiAd@wDfBoF`Cu@`@{A~@oElC}DvBYHM?YGSMMO[q@Ui@Qm@AgAA}@Cc@GSYi@_@O]C[Fc@^{BbD[\\YNe@LwC`@{Fr@{IVgNEkNEk@@q@JmAVo@Dk@E_AOm@BcA^i@V]S}@_@}B_AOGg@bBM\\QDu@T_CpA{ExCyDdCmCdBe@TqEnAwG|Aa@@cBXK?YGK?OHCHc@`@iGvAwGrAoBl@[NQOa@q@c@m@m@m@UKq@Uw@Ou@BgBRs@BkAI_AMQIQOg@cA[u@k@kAg@a@_@a@MSm@oBSc@c@e@w@u@a@WQEMAsCCs@?WD_A^c@PYDc@CcAYq@[k@_@q@k@IIG@WHuJtDqBl@u@LU?m@GuAO}B_@_De@uCc@cFs@qEy@c@IW?_@Fa@TU`@Op@E`@?RSASAo@MiA]aBo@uAKmBg@g@Ei@?}@H]Nm@Tk@\\w@n@mA`Ak@^YLu@Di@YAOIYQQ]Um@QkL]gCWU?O@]He@^OZK^AXBn@dA~D^hA"
-        },
-        {
-          distance: 15.1,
-          pourcentage: 2,
-          routes: "nf{rBavbaHNi@RJt@h@h@RRDjBHfDPbI\\jCJt@C`@ITKpBoA`HaEnAg@lBy@\\Uj@k@Xk@ZgANy@VqBRq@Lc@Xc@n@s@FODAFELOFQ@SAUGQKOCEIEiCaBaAk@mA]}@MwLkAuB[{@Uy@]eBkAqA{AkAaBsEeG_@_@o@i@wAo@q@Q}D_@}Hs@eBSaC_@wDu@aKiCyCo@kASuAU_BMuBIsBC{CNaBJiABmAEkBIoAS_AYyAm@iC_Bq@g@qEoD}F{EyAcAaA_@gASw@Gq@?yAJiCb@gNfBeALcBLcG`@gGPkABoC?wDCyNYiGUoGOcAIgAMiClFgOlYeCdFYl@s@rBSr@O`AWvBEz@A~BJlCZ~BtAjKd@dDX~B@LSBk@HcDx@}@Hw@Bq@E}@?g@MWEGMKSMOOMYKu@]q@c@e@]YMm@Mw@Qy@[c@QYIWIi@e@m@m@gAsA}@}@_@U[KqBY{@M[GMQYwAKsAGm@a@a@_@a@s@}@aBiBy@u@yAeBgBsBq@aAQa@AI@KGIOK_@QkAkA][GYOw@GOi@ImAW{@[]GwAGa@@sAJ[BqA@eDg@oCm@aB{@wA}@a@Uy@YwBe@uA_@y@Is@LOJcAfAq@^}@d@iC~@o@Nk@BkAEm@GQIIOE[Aa@Kg@[e@SQQI}@Sw@SMGuCl@sA\\k@JgBHYFWLUVMVEVAv@Cv@GPq@f@yBjA{Ar@YHc@Hq@JwDn@_ATwAf@_Bl@eBr@q@RqC`@i@J]LSN_@\\HTThAZh@r@j@Vf@tA|Cd@vA_A`BUNKD]BaA?YHq@`@{@\\cAVkA^Ft@DNDBN@l@Gx@It@@PEl@mAPKJ?JBHJ@HIpADNLHz@HHRETIPSDWBe@CcAj@oAr@OBk@@k@AQFULUZQl@S\\ER?ZOrAGJKHQBw@ESBMJQj@Uf@GHaATiBb@UPa@b@CP@JPNXPHBl@B^PHNBXCNEHeAn@c@b@QVSl@ITIJsAfAgAdAy@vA[bAKd@?LBPOd@l@L~@AXFbA|@XN`@P^Jz@`Cp@lBPCDDDBD?TAh@Kh@QVQFGz@aB^o@RAN@`@N^Rp@fC^hA"
-        },
-      ]
+      embouteillages: []
     }
   }
 

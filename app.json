@@ -14,7 +14,7 @@
     },
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/ic_app_logo.png",
+    "icon": "./assets/splash_traffic.png",
     "splash": {
       "image": "./assets/splash_traffic.png",
       "resizeMode": "contain",
