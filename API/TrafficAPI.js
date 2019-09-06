@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { AsyncStorage } from 'react-native';
 
-const base_url = "http://192.168.8.101:3000/";
+const base_url = "http://192.168.1.8:3000/";
 // const base_url = "https://apirafffic.herokuapp.com/";
 
 export function getDirection(origin, destination) { //the best direction selon google
