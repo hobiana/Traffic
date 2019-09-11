@@ -47,7 +47,7 @@ class LocaliserTrack extends React.Component {
 
   _loadListPerson = async () => { // izay fonction misy anio fleche io dia vo bind automatic ary afaka ampiasana any @ components hafa
     this.setState({ isLoading: true })
-    ajouterTracks("5d67ba1961bd4d4004e59077").then(async (rep) => {
+    ajouterTracks(this.idUserText).then(async (rep) => {
       console.log("vita ajout track")
       if (rep.status == 201) {
         var user = await AsyncStorage.getItem('user_connected');
@@ -99,6 +99,7 @@ class LocaliserTrack extends React.Component {
   }
 
   render() {
+    console.log("******* render list track *********************")
     return (
       <View style={styles.main_container}>
         <View style={styles.localise_container}>

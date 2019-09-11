@@ -21,6 +21,7 @@ import {
     inscription,
     authentification
 } from '../../API/TrafficAPI'
+import * as SecureStore from 'expo-secure-store';
 
 const { width: WIDTH } = Dimensions.get('window')
 class Inscription extends React.Component {

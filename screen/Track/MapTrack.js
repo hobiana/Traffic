@@ -30,24 +30,24 @@ class MapTrack extends React.Component {
   async componentDidMount() {
     var user = await AsyncStorage.getItem('user_connected');
     user = JSON.parse(user)
-    getPositionUserTracks(user.userId).then(response => {
-      console.log("getPositionUserTracks", response)
+    await getPositionUserTracks(user.userId).then(response => {
+      console.log("getPositionUserTracks volou")
       this.setState({
         markers: response.data
       })
     })
     setInterval(() => {
       getPositionUserTracks(user.userId).then(response => {
-        console.log("getPositionUserTracks", response)
+        console.log("getPositionUserTracks boucle")
         this.setState({
           markers: response.data
         })
       })
-    }, 60000)
+    }, 15000)
   }
 
   render() {
-    console.log("render")
+    console.log(" ************************** render map track ******************************")
     return (
       <View style={styles.container}>
         <MapView
@@ -71,7 +71,7 @@ class MapTrack extends React.Component {
               <MapView.Callout>
                 <View styles={styles.marker_container}>
                   <Text style={styles.marker}>
-                    {marker.lastName} {moment(marker.position[0].dateTime).format('YYYY-MM-DD HH:mm')}
+                    {marker.lastName} {moment(marker.position[0].datetime).format('YYYY-MM-DD HH:mm')}
                   </Text>
                 </View>
               </MapView.Callout>

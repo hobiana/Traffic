@@ -83,12 +83,13 @@ export async function getTracks(id) {
 }
 
 export async function getPositionUserTracks(id) {
-    console.log("anaty getPositionUserTracks", id)
-    const url = base_url + 'users/' + id + '/tracks/coordinates'
+    console.log(" *******   anaty getPositionUserTracks ********", id)
+    const url = base_url + 'users/' + id + '/tracks/coordinates?origin=traffic'
     var token = await SecureStore.getItemAsync('secure_token');
     var configToken = {
         headers: { Authorization: "Bearer " + token }
     };
+    console.log(url)
     return axios.get(url, configToken)
         .then((response) => {
             const rep = {
